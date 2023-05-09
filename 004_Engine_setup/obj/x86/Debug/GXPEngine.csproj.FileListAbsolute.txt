@@ -1,0 +1,24 @@
+C:\Users\anton\Desktop\schoolshit\Physics Engine\Final final\004_Engine_setup\bin\Debug\GXPEngine.exe.config
+C:\Users\anton\Desktop\schoolshit\Physics Engine\Final final\004_Engine_setup\bin\Debug\GXPEngine.exe
+C:\Users\anton\Desktop\schoolshit\Physics Engine\Final final\004_Engine_setup\bin\Debug\GXPEngine.pdb
+C:\Users\anton\Desktop\schoolshit\Physics Engine\Final final\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
+C:\Users\anton\Desktop\schoolshit\Physics Engine\Final final\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.SuggestedBindingRedirects.cache
+C:\Users\anton\Desktop\schoolshit\Physics Engine\Final final\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+C:\Users\anton\Desktop\schoolshit\Physics Engine\Final final\004_Engine_setup\obj\x86\Debug\GXPEngine.exe
+C:\Users\anton\Desktop\schoolshit\Physics Engine\Final final\004_Engine_setup\obj\x86\Debug\GXPEngine.pdb
+C:\Users\anton\Desktop\dawdawdaw\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
+C:\Users\anton\Desktop\dawdawdaw\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.SuggestedBindingRedirects.cache
+C:\Users\anton\Desktop\dawdawdaw\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+C:\Users\anton\Desktop\dawdawdaw\004_Engine_setup\obj\x86\Debug\GXPEngine.exe
+C:\Users\anton\Desktop\dawdawdaw\004_Engine_setup\obj\x86\Debug\GXPEngine.pdb
+C:\Users\anton\Desktop\dawdawdaw\004_Engine_setup\bin\Debug\GXPEngine.exe.config
+C:\Users\anton\Desktop\dawdawdaw\004_Engine_setup\bin\Debug\GXPEngine.exe
+C:\Users\anton\Desktop\dawdawdaw\004_Engine_setup\bin\Debug\GXPEngine.pdb
+C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\bin\Debug\GXPEngine.exe.config
+C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\bin\Debug\GXPEngine.exe
+C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\bin\Debug\GXPEngine.pdb
+C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
+C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.SuggestedBindingRedirects.cache
+C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\GXPEngine.exe
+C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\GXPEngine.pdb
