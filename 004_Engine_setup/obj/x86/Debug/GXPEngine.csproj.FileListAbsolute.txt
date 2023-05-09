@@ -22,3 +22,11 @@ C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\G
 C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\GXPEngine.exe
 C:\Users\anton\Desktop\schoolshit\Final project\004_Engine_setup\obj\x86\Debug\GXPEngine.pdb
+C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\bin\Debug\GXPEngine.exe.config
+C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\bin\Debug\GXPEngine.exe
+C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\bin\Debug\GXPEngine.pdb
+C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
+C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.SuggestedBindingRedirects.cache
+C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.exe
+C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.pdb

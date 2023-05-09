@@ -7,17 +7,20 @@ using GXPEngine;
 using Physics;
 
 class Player : CircleObjectBase {
-    Vec2 acceleration = new Vec2(0, 8f);//0,1
-    float accelerationMultiplier = 1f;
+    
+    
 	float speed = 7f;//6f
 	int cooldown=400;//500
 	int lastShotTime = -10000;
     int hp = 100;
     public static readonly string tag = "player";
-    bool canJump = true;
+    int state = MOVE;
+    const int MOVE = 1;
+    const int JUMP = 2;
+    const int FALL = 3;
 
     public Player(Vec2 startPosition,int pRadius) : base(pRadius,startPosition) {
-        bounciness = 0.2f;//0.1f
+        bounciness = 0f;//0.2f
         Draw(0, 255, 0);
     }
 
@@ -31,7 +34,6 @@ class Player : CircleObjectBase {
 	}
 
 	protected override void Move() {
-        HandleInput();
 
         bool repeat = true;
         int iteration = 0;
@@ -50,7 +52,7 @@ class Player : CircleObjectBase {
             iteration++;
         }
 
-        base.Move();
+        //base.Move();
 
         UpdateScreenPosition();
 
@@ -58,6 +60,7 @@ class Player : CircleObjectBase {
     }
 
     void ResolveCollisions(CollisionInfo pCol) {
+        state = MOVE;
         if (pCol.other.owner is Line)
         {
 
@@ -115,11 +118,26 @@ class Player : CircleObjectBase {
     }
 
 	protected override void Update() {
-        base.Update();
+        HandleInput();
+        Console.WriteLine(velocity);
+        //switch (state)
+        //{
+
+        //    case MOVE:
+
+        //        break;
+        //    case JUMP:
+
+        //        break;
+        //    case FALL:
+
+        //        break;
 
 
-		Shoot();
-	}
+        //}
+
+        Move();
+    }
 
     void HandleInput()
     {
@@ -133,17 +151,19 @@ class Player : CircleObjectBase {
         {
             moveDirection = new Vec2(1, 0);
         }
-        if (Input.GetKey(Key.UP)&&canJump)
+
+        if (Input.GetKey(Key.UP) && state == MOVE)
         {
-            moveDirection -= new Vec2(0, 10);
-            accelerationMultiplier = 0.5f;
-            canJump= false;
+            Console.WriteLine(1);
+            state = JUMP;
+            velocity -= new Vec2(0, 20);
+
         }
-        velocity = moveDirection*speed;
-        velocity += acceleration*accelerationMultiplier;
+        velocity.x = moveDirection.x * speed;
+        velocity += acceleration * accelerationMultiplier;
         Console.WriteLine(velocity);
 
-       
+
 
     }
 

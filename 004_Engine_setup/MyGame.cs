@@ -4,17 +4,18 @@ using GXPEngine;
 public class MyGame : Game
 {
 
-	PlayerNew player;
+	Player player;
 	public Camera camera;
 
 	public MyGame() : base(1200, 800, false,false)
 	{
         RenderMain = false;
-        player = new PlayerNew(new Vec2(750, 750), 30);
+        player = new Player(new Vec2(750, 750), 30);
         camera = new Camera(0, 0, 1200, 800);
         player.AddChild(camera);
         AddChild(player);
         AddChild(new Line(new Vec2(500,1000),new Vec2(1500,1000)));
+        AddChild(new CircleMapObject(30, new Vec2(1000,500), new Vec2(), true));
 
 
         //AddChild(new Line(new Vec2(400, 600), new Vec2(600, 400)));
@@ -50,7 +51,7 @@ public class MyGame : Game
 
     }
 
-	static void Main()
+    static void Main()
 	{
 
 

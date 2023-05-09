@@ -18,10 +18,13 @@ public class CircleMapObject:CircleObjectBase{
 
         isMoving = moving;
         Draw(230, 200, 0);
-        _density = 10f;
+        _density = 1f;//10f
 
     }
     protected override void Move() {
+
+        velocity.x *= friction;
+        velocity += acceleration * accelerationMultiplier;
 
         bool repeat = true;
         int iteration = 0;

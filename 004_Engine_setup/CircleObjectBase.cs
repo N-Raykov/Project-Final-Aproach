@@ -10,13 +10,16 @@ using Physics;
 
 public class CircleObjectBase : EasyDraw
 {
+
     public ColliderManager engine;
     public Collider myCollider;
     protected Vec2 position;
     protected Vec2 oldPosition;
     public Vec2 velocity;
     protected int radius;
-    protected float bounciness=0.2f;
+    protected float bounciness=0f;//0.2f
+    protected Vec2 acceleration = new Vec2(0, 1f);//0,1
+    protected float accelerationMultiplier = 1f;
     public float _bounciness
     {
         get { return bounciness; }
@@ -62,7 +65,7 @@ public class CircleObjectBase : EasyDraw
 
     protected virtual void Update()
     {
-        velocity *= friction;
+        //velocity *= friction;
         Move();
     }
 
