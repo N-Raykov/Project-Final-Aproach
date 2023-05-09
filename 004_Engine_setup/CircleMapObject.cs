@@ -19,6 +19,7 @@ public class CircleMapObject:CircleObjectBase{
         isMoving = moving;
         Draw(230, 200, 0);
         _density = 1f;//10f
+        friction = 0.75f;
 
     }
     protected override void Move() {

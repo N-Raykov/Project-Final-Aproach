@@ -15,7 +15,7 @@ public class MyGame : Game
         player.AddChild(camera);
         AddChild(player);
         AddChild(new Line(new Vec2(500,1000),new Vec2(1500,1000)));
-        AddChild(new CircleMapObject(30, new Vec2(1000,500), new Vec2(), true));
+        AddChild(new CircleMapObject(30, new Vec2(1000,500)));
 
 
         //AddChild(new Line(new Vec2(400, 600), new Vec2(600, 400)));
