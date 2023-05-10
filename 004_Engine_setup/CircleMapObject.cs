@@ -18,12 +18,12 @@ public class CircleMapObject:CircleObjectBase{
 
         isMoving = moving;
         Draw(230, 200, 0);
-        _density = 1f;//10f
+        _density = 2f;//10f
         friction = 0.75f;
 
     }
     protected override void Move() {
-
+        //velocity.x -= 2;
         velocity.x *= friction;
         velocity += acceleration * accelerationMultiplier;
 
@@ -101,7 +101,7 @@ public class CircleMapObject:CircleObjectBase{
 
         if (pCol.other.owner is Player)
         {
-            NewtonLawBalls((CircleMapObject)pCol.other.owner, pCol);
+            NewtonLawBalls((Player)pCol.other.owner, pCol);
         }
         if (pCol.other.owner is CircleMapObject) {
             if (((CircleMapObject)pCol.other.owner).isMoving)

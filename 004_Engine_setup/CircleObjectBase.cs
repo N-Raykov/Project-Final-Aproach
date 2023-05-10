@@ -65,6 +65,7 @@ public class CircleObjectBase : EasyDraw
 
     protected virtual void Update()
     {
+        //Console.WriteLine(velocity);
         //velocity *= friction;
         Move();
     }
@@ -126,4 +127,6 @@ public class CircleObjectBase : EasyDraw
         velocity = velocity - (1 + bounciness) * ((velocity - centerOfMass).Dot(pCol.normal)) * pCol.normal;
         pOther.velocity = pOther.velocity - (1 + pOther._bounciness) * ((pOther.velocity - centerOfMass).Dot(pCol.normal)) * pCol.normal;
     }
+
+
 }
