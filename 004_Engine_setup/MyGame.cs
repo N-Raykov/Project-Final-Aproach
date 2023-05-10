@@ -4,7 +4,7 @@ using GXPEngine;
 
 public class MyGame : Game
 {
-    string startLevel = "Test_Level.tmx";
+    string startLevel = "Game_Puzzle_TileSet_neeew.tmx";
     string nextLevel;
 	public Camera camera;
 

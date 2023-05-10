@@ -42,7 +42,7 @@
  <objectgroup id="2" name="Object Layer 1">
   <object id="36" class="SpawnPoint" x="134.426" y="107.665" width="18.0479" height="19.2926"/>
   <object id="44" class="Wall" x="78.415" y="236.49">
-   <polyline points="0,0 166.787,78.415"/>
+   <polyline points="0,0 166.787,78.415 45.4309,166.787"/>
   </object>
  </objectgroup>
 </map>

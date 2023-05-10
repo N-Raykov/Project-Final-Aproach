@@ -15,11 +15,11 @@ class Wall : AnimationSprite
     Vec2 end;
     bool created = false;
 
-    public Wall(TiledObject obj = null, PolyLine polyLine = null) : base("tilesheet.png", 1, 1, -1, false, false)
+    public Wall(TiledObject obj = null) : base("tilesheet.png", 1, 1, -1, false, false)
     {
         Initialize(obj);
 
-        //Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, obj.Points);
+        //Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, obj.polyLines.Points);
     }
 
     void Initialize(TiledObject obj)

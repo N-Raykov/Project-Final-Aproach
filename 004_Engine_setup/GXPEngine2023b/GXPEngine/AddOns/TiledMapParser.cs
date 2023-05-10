@@ -435,76 +435,42 @@ namespace TiledMapParser
 		}
 	}
 
-	[XmlRootAttribute("polyline")]
-	public class PolyLine : PropertyContainer
+    [XmlRootAttribute("polyline")]
+    public class PolyLine : PropertyContainer
     {
-		[XmlAttribute("id")]
-		public int ID;
-		[XmlAttribute("gid")]
-		public uint GID = 0xffffffff;
+        [XmlAttribute("id")]
+        public int ID;
+        [XmlAttribute("gid")]
+        public uint GID = 0xffffffff;
 		// Tiled's GID (with two flip bits) is processed into these three fields, after calling Initialize:
-		public int ImageID = -1;
-		public bool MirrorX = false;
-		public bool MirrorY = false;
-		[XmlAttribute("rotation")]
-		public float Rotation = 0;
-		[XmlAttribute("name")]
-		public string Name;
-		// Hotfix because Tiled 1.9 breaks compatibility!:
-		public string Type
-		{
-			get
-			{
-				if (type != null) return type; else return myClass;
-			}
-			set
-			{
-				type = value;
-			}
-		}
-		[XmlAttribute("type")]
-		public string type;
-		[XmlAttribute("class")]
-		public string myClass;
+		[XmlAttribute("points")]
+		public string Points;
+        public string Type
+        {
+            get
+            {
+                if (type != null) return type; else return myClass;
+            }
+            set
+            {
+                type = value;
+            }
+        }
+        [XmlAttribute("type")]
+        public string type;
+        [XmlAttribute("class")]
+        public string myClass;
 
+    }
 
-		[XmlAttribute("width")]     // width in pixels
-		public float Width;
-		[XmlAttribute("height")]    // height in pixels
-		public float Height;
-		[XmlAttribute("x")]
-		public float X;
-		[XmlAttribute("y")]
-		public float Y;
-		[XmlElement("text")]
-		public Text textField;
-
-		/// <summary>
-		/// Call this method to initialize the MirrorX, MirrorY and ImageID fields.
-		/// (The GID value read from the file encodes all of this information.)
-		/// </summary>
-		public void Initialize()
-		{
-			if (GID != 0xffffffff)
-			{
-				ImageID = (int)(GID & 0x3fffffff);
-				MirrorX = (GID & 0x80000000) > 0;
-				MirrorY = (GID & 0x40000000) > 0;
-			}
-		}
-
-		override public string ToString()
-		{
-			return "Object: " + Name + " ID: " + ID + " Type: " + Type + " coordinates: (" + X + "," + Y + ") dimensions: (" + Width + "," + Height + ")\n";
-		}
-	}
-
-	[XmlRootAttribute("object")]
+    [XmlRootAttribute("object")]
 	public class TiledObject : PropertyContainer {
 		[XmlAttribute("id")]
 		public int ID;
 		[XmlAttribute("gid")]
 		public uint GID=0xffffffff;
+		[XmlElement("polyline")]
+		public PolyLine polyLines;
 		// Tiled's GID (with two flip bits) is processed into these three fields, after calling Initialize:
 		public int ImageID=-1;
 		public bool MirrorX = false;
