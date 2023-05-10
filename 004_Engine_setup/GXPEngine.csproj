@@ -101,6 +101,7 @@
     <Compile Include="PlayerNew.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="SolidBlock.cs" />
+    <Compile Include="SpawnPoint.cs" />
     <Compile Include="Vec2Tests.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>

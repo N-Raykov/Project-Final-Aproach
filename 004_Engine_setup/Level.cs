@@ -9,8 +9,8 @@ using GXPEngine;
 class Level : GameObject
 {
     TiledLoader loader;
-    Player player;
     string currentLevelName;
+
 
     public Level(string filename)
     {
@@ -23,9 +23,6 @@ class Level : GameObject
 
     void CreateLevel(bool includeImageLayers = true)
     {
-        player = new Player(new Vec2(100, 0), 30);
-        AddChild(player);
-        AddChild(new Line(new Vec2(0, 500), new Vec2(500, 500)));
 
         loader.addColliders = false;
         loader.LoadImageLayers();
