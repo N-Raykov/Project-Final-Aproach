@@ -1,22 +1,28 @@
 using System;
+using System.Collections.Generic;
 using GXPEngine;
 
 public class MyGame : Game
 {
-
-	Player player;
+    string startLevel = "Test_Level.tmx";
+    string nextLevel;
+    Player player;
 	public Camera camera;
 
 	public MyGame() : base(1200, 800, false,false)
 	{
-        RenderMain = false;
-        player = new Player(new Vec2(750, 750), 30);
-        camera = new Camera(0, 0, 1200, 800);
-        player.AddChild(camera);
-        AddChild(player);
-        AddChild(new Line(new Vec2(500,1000),new Vec2(1500,1000)));
-        AddChild(new CircleMapObject(30, new Vec2(1000,500)));
 
+        //RenderMain = false;
+        //player = new Player(new Vec2(750, 750), 30);
+        //camera = new Camera(0, 0, 1200, 800);
+        //player.AddChild(camera);
+        //AddChild(player);
+        //AddChild(new Line(new Vec2(500, 1000), new Vec2(1500, 1000)));
+        //AddChild(new CircleMapObject(30, new Vec2(1000, 500)));
+
+        LoadLevel(startLevel);
+
+        OnAfterStep += CheckLoadLevel;
 
         //AddChild(new Line(new Vec2(400, 600), new Vec2(600, 400)));
         //AddChild(new Line(new Vec2(600, 400), new Vec2(1150, 600)));
@@ -49,6 +55,32 @@ public class MyGame : Game
 
         //Console.WriteLine(Vec2.Dist(new Vec2(0,0),new Vec2(0,10)));
 
+    }
+
+    void DestroyAll()
+    {
+        List<GameObject> children = GetChildren();
+        foreach (GameObject child in children)
+        {
+            child.Destroy();
+        }
+    }
+
+    public void LoadLevel(string pNextLevel)
+    {
+        nextLevel = pNextLevel;
+    }
+
+    void CheckLoadLevel()
+    {
+        if (nextLevel != null)
+        {
+            DestroyAll();
+
+            AddChild(new Level(nextLevel));
+
+            nextLevel = null;
+        }
     }
 
     static void Main()

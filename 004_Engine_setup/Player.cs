@@ -119,7 +119,7 @@ class Player : CircleObjectBase {
 
 	protected override void Update() {
         HandleInput();
-        Console.WriteLine(velocity);
+        //Console.WriteLine(velocity);
         //switch (state)
         //{
 
@@ -161,7 +161,7 @@ class Player : CircleObjectBase {
         }
         velocity.x = moveDirection.x * speed;
         velocity += acceleration * accelerationMultiplier;
-        Console.WriteLine(velocity);
+        //Console.WriteLine(velocity);
 
 
 

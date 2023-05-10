@@ -84,6 +84,7 @@
     <Compile Include="GXPEngine2023b\GXPEngine\Utils\Mathf.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\Utils\Utils.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="PhysicsEngine\Colliders\AABB.cs" />
     <Compile Include="PhysicsEngine\Colliders\BoxCollider.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Projectile.cs" />
     <Compile Include="SolidBlock.cs" />
     <Compile Include="Vec2Tests.cs" />
+    <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
