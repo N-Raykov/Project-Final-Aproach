@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.Remoting.Activation;
+using System.Threading;
 using GXPEngine;
 using GXPEngine.Core;
 
@@ -45,10 +46,29 @@ namespace Physics
             return (diffVec.Length() < radius + other.radius);
         }
 
-        public bool Overlaps(LineSegment other)//works as an overlap with a line not with a segment
+        public bool Overlaps(LineSegment other)
         {
             float dist = other.CalculateDistanceSegment(position);
-            return (dist < radius&&dist>-radius);
+            MyGame myGame = (MyGame)Game.main;
+            Vec2 segmentVector = other.GetSegmentVector();
+            Vec2 reverseNormal = segmentVector.ReverseNormal();
+            Vec2 point = position+reverseNormal * dist;
+            Vec2 segment2 = point - other.start;
+            
+            float crossProduct = segmentVector.x * segment2.y - segment2.x * segmentVector.y;
+            float dotProduct1 = segmentVector.Dot(segment2);    
+            float dotProduct2 = segmentVector.Dot(segmentVector);
+
+            if (-epsilon < crossProduct && crossProduct < epsilon)
+            {
+                if (0 < dotProduct1 && dotProduct1 < dotProduct2)
+                    if (dist < radius && dist > -radius){
+
+                        return true;
+                    }
+            }
+            return false;
+
         }
 
 

@@ -12,8 +12,7 @@ class Player : CircleObjectBase {
     
 	float speedEachFrame = 2.5f;//6f
     float maxSpeedHorizontal = 7f;
-    float maxSpeedVertical = 50f;
-	int cooldown=400;//500
+	int cooldown=400;
 	int lastShotTime = -10000;
     int hp = 100;
     public static readonly string tag = "player";
@@ -23,10 +22,11 @@ class Player : CircleObjectBase {
     const int FALL = 3;
     const int ROLLING = 4;
     const int FLYING = 5;
+    bool hadPortalCollisionThisFrame = false;
 
 
     public Player(Vec2 startPosition,int pRadius) : base(pRadius,startPosition) {
-        bounciness = 0f;//0.2f
+        bounciness = 0f;
         friction = 0.5f;
         Draw(0, 255, 0);
     }
@@ -54,41 +54,40 @@ class Player : CircleObjectBase {
             CollisionInfo colInfo = engine.MoveUntilCollision(myCollider, velocity*remainingMovement);
             if (colInfo != null)
             {
-                //if (colInfo.timeOfImpact < 0.01f) 
                 repeat = true;
-                remainingMovement = 1 - colInfo.timeOfImpact; // take it from here...
+                remainingMovement = 1 - colInfo.timeOfImpact; 
                 ResolveCollisions(colInfo);
             }
             iteration++;
         }
 
-        //List<Collider> overlaps = engine.GetOverlaps(myCollider);
+        List<Collider> overlaps = engine.GetOverlapsSolids(myCollider);
 
-        //foreach (Collider col in overlaps)
-        //{
-        //    //Console.WriteLine(1);
-        //    if (col.owner is Teleporter)
-        //    {
+        foreach (Collider pCol in overlaps)
+        {
+            
+            if (pCol.owner is Teleporter&&!hadPortalCollisionThisFrame)
+            {
+                //Console.WriteLine(1);
+                MyGame myGame = (MyGame)Game.main;
+                Teleporter teleporter = (Teleporter)pCol.owner;
+                if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
+                {
 
-        //        MyGame myGame = (MyGame)Game.main;
-        //        Teleporter teleporter = (Teleporter)col.owner;
-        //        if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
-        //        {
+                    myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].rotationOrigin + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+                    lastTeleport = Time.time;
+                    Console.WriteLine(velocity.Length());
 
-        //            myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].myCollider.position + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
-        //            lastTeleport = Time.time;
-        //            Console.WriteLine(velocity.Length());
+                    velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
 
-        //            velocity = velocity.Length() * 1.2f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
-
-        //            //accelerationMultiplier = 0.75f;
-        //            Console.WriteLine(velocity.Length());
-        //        }
+                    //accelerationMultiplier = 0.75f;
+                    Console.WriteLine(velocity.Length());
+                }
 
 
 
-        //    }
-        //}
+            }
+        }
 
 
 
@@ -100,15 +99,9 @@ class Player : CircleObjectBase {
 
     void ResolveCollisions(CollisionInfo pCol) {
 
-        //if (pCol.normal.y < 0&&Mathf.Abs(pCol.normal.x)<0.9f)
-        //    state = MOVE;
-
-
-        //accelerationMultiplier = 1f;
-
         if (pCol.other.owner is Teleporter)
         {
-
+            hadPortalCollisionThisFrame= true;
             MyGame myGame = (MyGame)Game.main;
             Teleporter teleporter = (Teleporter)pCol.other.owner;
             if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
@@ -120,8 +113,6 @@ class Player : CircleObjectBase {
 
                 velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
 
-                //accelerationMultiplier = 0.75f;
-                //Console.WriteLine(velocity.Length());
             }
             else {
                 velocity.Reflect(bounciness, pCol.normal);
@@ -148,7 +139,6 @@ class Player : CircleObjectBase {
             else {
                 Line segment1 = (Line)pCol.other.owner;
                 if (segment1.start.GetAngleDegreesTwoPoints(segment1.end) != 0){
-                    //Console.WriteLine(1);
                     state = ROLLING;
                 }
                 else{
@@ -209,10 +199,13 @@ class Player : CircleObjectBase {
     }
 
 	protected override void Update() {
+        hadPortalCollisionThisFrame= false;
         HandleInput();
 
         Move();
         Shoot();
+
+        //Console.WriteLine(myCollider.position);
     }
 
     void HandleInput()
@@ -240,7 +233,7 @@ class Player : CircleObjectBase {
         }
 
 
-        velocity.x += moveDirection.x * speedEachFrame; // This seems a bit strict to me for a physics based game...
+        velocity.x += moveDirection.x * speedEachFrame; 
 
         switch (state){
             case MOVE:
@@ -281,7 +274,7 @@ class Player : CircleObjectBase {
             velocity = velocity.Normalized() * maxSpeed;
         }
 
-        Console.WriteLine(velocity+" "+state);
+        //Console.WriteLine(velocity+" "+state);
 
 
 
