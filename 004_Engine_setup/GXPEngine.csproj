@@ -40,10 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BouncyFloor.cs" />
     <Compile Include="BoxTest.cs" />
     <Compile Include="CircleObjectBase.cs" />
     <Compile Include="CircleMapObject.cs" />
+    <Compile Include="Enemy.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\AddOns\Camera.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\AddOns\MouseHandler.cs" />
@@ -101,11 +101,7 @@
     <Compile Include="PlayerNew.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="SolidBlock.cs" />
-
-    <Compile Include="Teleporter.cs" />
-    <Compile Include="TeleportManager.cs" />
     <Compile Include="SpawnPoint.cs" />
-
     <Compile Include="Vec2Tests.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>

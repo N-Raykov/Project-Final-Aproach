@@ -8,26 +8,24 @@ using Physics;
 class Projectile : CircleObjectBase {
 
 	public int bounces = 0;
-	public readonly int maxBounces = 1;
+	public readonly int maxBounces = 3;
 	float speed=10f;
     string owner;
     int damage = 1;
     public static int _radius=5;
-    int portalNumber=-1;
 
     public static float _speed {
         get { return 10f; }//remember to also change speed
     }
     //Sprite sprite = new Sprite("bullet.png",false);
 
-	public Projectile(Vec2 startPosition, Vec2 pVelocity,int pRadius,string pOwner,int pPortalNumber) : base(pRadius,startPosition) {
+	public Projectile(Vec2 startPosition, Vec2 pVelocity,int pRadius,string pOwner) : base(pRadius,startPosition) {
 		
         _radius=pRadius;
 		velocity=pVelocity;
         owner = pOwner;
         bounciness = 1f;
         Draw(255, 255, 255);
-        portalNumber = pPortalNumber;
         //sprite.SetScaleXY(2, 2);
         //AddChild(sprite);
         //sprite.SetOrigin(width/2,height/2);
@@ -56,32 +54,16 @@ class Projectile : CircleObjectBase {
 	void ResolveCollisions(CollisionInfo pCol) {
         if (pCol != null)
         {
-
-            if (pCol.other.owner is Line&&pCol.other is LineSegment && portalNumber!=-1) {
-                MyGame myGame = (MyGame)Game.main;
-                LineSegment line = (LineSegment)pCol.other;
-                if (myGame.teleportManager.portals[portalNumber] != null) {
-
-                    myGame.teleportManager.portals[portalNumber].Destroy();
-                    
-                    //Console.WriteLine(myGame.teleportManager.portals[portalNumber]);
-                }
-                float rotation = line.start.GetAngleDegreesTwoPoints(line.end);
-                myGame.teleportManager.portals[portalNumber] = new Teleporter(myCollider.position, portalNumber,pCol.normal);
-                myGame.teleportManager.portals[portalNumber].Rotate(rotation);
-
-
-                parent.AddChild(myGame.teleportManager.portals[portalNumber]);
-                //parent.AddChild(new Teleporter(myCollider.position,portalNumber));
-                this.LateDestroy();
-            }
-
-            if (pCol.other.owner is CircleMapObject)// || pCol.other.owner is Line
+            if (pCol.other.owner is CircleMapObject || pCol.other.owner is Line)
             {
                 velocity.Reflect(bounciness, pCol.normal);
                 bounces++;
             }
-            
+            if (pCol.other.owner is Enemy) {
+                Enemy enemy = (Enemy)pCol.other.owner;
+                enemy.TakeDamage(damage);
+                this.LateDestroy();    
+            }
 
             if (pCol.other.owner is Projectile) { 
                 Projectile projectile=(Projectile)pCol.other.owner;

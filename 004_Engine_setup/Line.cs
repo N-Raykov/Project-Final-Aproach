@@ -14,17 +14,14 @@ public class Line:EasyDraw
 {
     public Vec2 start;
     public Vec2 end;
-    public readonly Vec2 rotationOrigin;
+    Vec2 rotationOrigin;
     public readonly bool isRotating=false;
     public readonly int rotationEachFrame=1;
-    protected byte r = 255;
-    protected byte g = 255;
-    protected byte b = 255;
 
     public uint lineWidth = 1;
 
-    protected ColliderManager engine;
-    protected List<Physics.Collider> colliders = new List<Physics.Collider> { };
+    ColliderManager engine;
+    List<Physics.Collider> colliders = new List<Physics.Collider> { };
 
     public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false):base(2000,2000)//its 1500 1500 just to make sure it works for the rotating lines
     {
@@ -32,7 +29,7 @@ public class Line:EasyDraw
         start = pStart;
         end = pEnd;
         rotationOrigin = (start + end) / 2;
-        Draw(r,g,b);
+        Draw();
         colliders.Add(new Physics.LineSegment(this, start, end));
         colliders.Add(new Physics.LineSegment(this, end, start));
         colliders.Add(new Physics.Circle(this, start,0));
@@ -42,42 +39,38 @@ public class Line:EasyDraw
             engine.AddSolidCollider(col);
     }
 
-    protected override void OnDestroy()
-    {
-        foreach(Physics.Collider col in colliders)
-            engine.RemoveSolidCollider(col);
-    }
-
-    protected void Draw(byte red, byte green, byte blue)
+    void Draw()
     {
         Clear(Color.Empty);
         StrokeWeight(0);//was 0
-        Stroke(red, green, blue);
         Line(start.x,start.y,end.x,end.y);
 
     }
 
-    public void Rotate(float pRotation) {
-        start.RotateAroundDegrees(rotationOrigin, pRotation);
-        end.RotateAroundDegrees(rotationOrigin, pRotation);
+    void Rotate() {
+        start.RotateAroundDegrees(rotationOrigin, rotationEachFrame);
+        end.RotateAroundDegrees(rotationOrigin, rotationEachFrame);
 
         foreach (Physics.Collider col in colliders) {
             if (col is Circle)
             {
-                col.position.RotateAroundDegrees(rotationOrigin, pRotation);
+                col.position.RotateAroundDegrees(rotationOrigin, rotationEachFrame);
             }
             else {
                 
-                ((LineSegment)col).start.RotateAroundDegrees(rotationOrigin, pRotation);
-                ((LineSegment)col).end.RotateAroundDegrees(rotationOrigin, pRotation);
+                ((LineSegment)col).start.RotateAroundDegrees(rotationOrigin, rotationEachFrame);
+                ((LineSegment)col).end.RotateAroundDegrees(rotationOrigin, rotationEachFrame);
             }
         }
-        Draw(r, g, b);
+
+        Draw();
     }
 
     void Update() {
        
-    }
+        if (isRotating)
+            Rotate();
 
+    }
 
 }
