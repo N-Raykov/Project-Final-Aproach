@@ -44,7 +44,7 @@ class Wall : AnimationSprite
             vectorList.Add(vector);
         }
 
-        if (obj.polygonPoints.Points != null)
+        if (obj.polygonPoints != null)
         {
             vectorList.Add(vectorList[0]);
         }

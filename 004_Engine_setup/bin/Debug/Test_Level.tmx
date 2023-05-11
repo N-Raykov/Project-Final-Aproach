@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="51">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="53">
  <tileset firstgid="1" name="Visual test" tilewidth="16" tileheight="16" tilecount="1568" columns="56">
   <image source="tilesheet.png" width="896" height="448"/>
  </tileset>
@@ -43,6 +43,9 @@
   <object id="36" class="SpawnPoint" x="134.426" y="107.665" width="18.0479" height="19.2926"/>
   <object id="50" class="Wall" x="93.3333" y="317.333">
    <polygon points="0,0 141.333,-49.3333 26,-38"/>
+  </object>
+  <object id="51" class="Wall" x="265.5" y="198">
+   <polyline points="0,0 184,8.5 64.5,76.5 -40.5,4 -139.5,29"/>
   </object>
  </objectgroup>
 </map>
