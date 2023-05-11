@@ -102,6 +102,7 @@
     <Compile Include="PlayerNew.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="SolidBlock.cs" />
+    <Compile Include="SoundManager.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="Teleporter.cs" />
     <Compile Include="TeleportManager.cs" />

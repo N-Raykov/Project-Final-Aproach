@@ -195,6 +195,7 @@ class Player : CircleObjectBase {
             Projectile bullet = new Projectile(position, shotDirection, Projectile._radius,tag,0);
             parent.AddChild(bullet);
             lastShotTime = Time.time;
+            new Sound("pickUp.mp3").Play();
         }
 
         if (Input.GetMouseButton(1) && (Time.time - lastShotTime >= cooldown))

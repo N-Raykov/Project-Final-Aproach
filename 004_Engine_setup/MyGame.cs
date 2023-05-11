@@ -16,7 +16,6 @@ public class MyGame : Game
 
         camera = new Camera(0, 0, 1200, 800);
 
-
         teleportManager = new TeleportManager();
 
         LoadLevel(startLevel);
