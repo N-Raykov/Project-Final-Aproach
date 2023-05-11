@@ -10,6 +10,8 @@ namespace Physics
 
     public class Circle : Collider
     {
+
+        const float epsilon = 0.001f;//might need to add more of these
         public float radius
         {
             get { return _radius; }
@@ -95,7 +97,8 @@ namespace Physics
         {
             MyGame myGame = (MyGame)Game.main;
             float ballDistance = other.CalculateDistanceSegment(position);
-            if (ballDistance < this.radius)
+            
+            if (ballDistance+epsilon < this.radius)
             {
 
                 float timeOfImpact = CalculateLineTimeOfImpact(other,velocity);

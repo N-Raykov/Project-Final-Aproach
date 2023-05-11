@@ -9,7 +9,7 @@ class Projectile : CircleObjectBase {
 
 	public int bounces = 0;
 	public readonly int maxBounces = 1;
-	float speed=10f;
+	float speed=20f;
     string owner;
     int damage = 1;
     public static int _radius=5;
@@ -66,8 +66,10 @@ class Projectile : CircleObjectBase {
                     
                     //Console.WriteLine(myGame.teleportManager.portals[portalNumber]);
                 }
+                //oldPosition+=velocity*pCol.timeOfImpact
                 float rotation = line.start.GetAngleDegreesTwoPoints(line.end);
-                myGame.teleportManager.portals[portalNumber] = new Teleporter(myCollider.position, portalNumber,pCol.normal);
+                //myGame.teleportManager.portals[portalNumber] = new Teleporter(myCollider.position, portalNumber,pCol.normal);
+                myGame.teleportManager.portals[portalNumber] = new Teleporter(myCollider.position-pCol.normal*radius/2, portalNumber, pCol.normal);
                 myGame.teleportManager.portals[portalNumber].Rotate(rotation);
 
 

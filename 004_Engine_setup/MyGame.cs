@@ -23,12 +23,13 @@ public class MyGame : Game
         AddChild(new Line(new Vec2(2000, 1600), new Vec2(2500, 1600)));
 
 
-        AddChild(new Line(new Vec2(500, 600), new Vec2(1500, 600)));
+        //AddChild(new Line(new Vec2(500, 600), new Vec2(1500, 600)));
 
 
 
         //AddChild(new BouncyFloor(new Vec2(600,900),new Vec2(1000,900)));
-        AddChild(new CircleMapObject(30, new Vec2(1000,500)));
+        //AddChild(new CircleMapObject(30, new Vec2(1000, 500)));
+        AddChild(new CircleMapObject(30, new Vec2(250, 250)));
 
         //AddChild(new Player(new Vec2(850, 750), 30));
 

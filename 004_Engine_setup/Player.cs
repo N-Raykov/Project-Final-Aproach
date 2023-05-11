@@ -62,18 +62,48 @@ class Player : CircleObjectBase {
             iteration++;
         }
 
+        //List<Collider> overlaps = engine.GetOverlaps(myCollider);
+
+        //foreach (Collider col in overlaps)
+        //{
+        //    //Console.WriteLine(1);
+        //    if (col.owner is Teleporter)
+        //    {
+
+        //        MyGame myGame = (MyGame)Game.main;
+        //        Teleporter teleporter = (Teleporter)col.owner;
+        //        if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
+        //        {
+
+        //            myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].myCollider.position + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+        //            lastTeleport = Time.time;
+        //            Console.WriteLine(velocity.Length());
+
+        //            velocity = velocity.Length() * 1.2f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+
+        //            //accelerationMultiplier = 0.75f;
+        //            Console.WriteLine(velocity.Length());
+        //        }
+
+
+
+        //    }
+        //}
+
+
+
+
         UpdateScreenPosition();
 
 
     }
 
     void ResolveCollisions(CollisionInfo pCol) {
-        //Console.WriteLine(pCol.normal);
 
-        //if (pCol.normal.y==-1)
+        //if (pCol.normal.y < 0&&Mathf.Abs(pCol.normal.x)<0.9f)
         //    state = MOVE;
-        if (pCol.normal.y < 0&&Mathf.Abs(pCol.normal.x)<0.9f)
-            state = MOVE;
+
+
         //accelerationMultiplier = 1f;
 
         if (pCol.other.owner is Teleporter)
@@ -91,7 +121,10 @@ class Player : CircleObjectBase {
                 velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
 
                 //accelerationMultiplier = 0.75f;
-                Console.WriteLine(velocity.Length());
+                //Console.WriteLine(velocity.Length());
+            }
+            else {
+                velocity.Reflect(bounciness, pCol.normal);
             }
 
             return;
@@ -131,6 +164,7 @@ class Player : CircleObjectBase {
         if (pCol.other.owner is BouncyFloor) {
             velocity.Reflect(1.1f, pCol.normal);
             state = JUMP;
+            return;
         }
 
 
@@ -144,6 +178,7 @@ class Player : CircleObjectBase {
             {
                 velocity.Reflect(bounciness, pCol.normal);
             }
+            return;
 
         }
 
@@ -181,32 +216,6 @@ class Player : CircleObjectBase {
 
     void HandleInput()
     {
-        // alternative:
-        // if left or right is pressed, add a very high acceleration
-        // use a max horizontal velocity (or a nonlinear friction)
-        //
-        // This would give responsive platformer controls, but also physics response (velocity is maintained when not pushing button)
-
-
-        //Vec2 moveDirection = new Vec2(0, 0);
-
-        //if (Input.GetKey(Key.LEFT))
-        //{
-        //    moveDirection = new Vec2(-1, 0);
-        //}
-        //if (Input.GetKey(Key.RIGHT))
-        //{
-        //    moveDirection = new Vec2(1, 0);
-        //}
-
-        //if (Input.GetKey(Key.UP) && state == MOVE)
-        //{
-        //    //Console.WriteLine(1);
-        //    state = JUMP;
-        //    velocity -= new Vec2(0, 20);
-
-        //}
-
 
         Vec2 moveDirection = new Vec2(0, 0);
         if (state != ROLLING) {
@@ -220,9 +229,8 @@ class Player : CircleObjectBase {
                 moveDirection += new Vec2(1, 0);
             }
 
-            if (Input.GetKey(Key.UP) && state == MOVE)
+            if (Input.GetKey(Key.UP) && (state == MOVE))
             {
-                //Console.WriteLine(1);
                 state = JUMP;
                 velocity -= new Vec2(0, 20);
 
@@ -233,8 +241,6 @@ class Player : CircleObjectBase {
 
         velocity.x += moveDirection.x * speedEachFrame; // This seems a bit strict to me for a physics based game...
 
-        //Console.WriteLine(state);
-        //when falling down after the jump need to cap the speed while making sure the speed when going down slope doesnt cap
         switch (state){
             case MOVE:
                 CapSpeed();
@@ -260,9 +266,7 @@ class Player : CircleObjectBase {
                 break;
             case ROLLING:
                 if (velocity.y < 0) {
-                    //Console.WriteLine(1);
                     CapSpeed();
-                    //velocity.x *= friction;
                 }
                     
                 break;
@@ -272,7 +276,11 @@ class Player : CircleObjectBase {
 
         velocity += acceleration * accelerationMultiplier;
 
-        //Console.WriteLine(velocity+" "+state);
+        if (velocity.Length() > maxSpeed) {
+            velocity = velocity.Normalized() * maxSpeed;
+        }
+
+        Console.WriteLine(velocity+" "+state);
 
 
 

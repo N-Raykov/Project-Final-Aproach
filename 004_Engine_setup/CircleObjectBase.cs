@@ -22,6 +22,8 @@ public class CircleObjectBase : EasyDraw
     protected float accelerationMultiplier = 1f;
     protected float teleporterCooldown=0;//500
     protected float lastTeleport = -100000;
+    protected float maxSpeed=100f;
+
     public float _bounciness
     {
         get { return bounciness; }

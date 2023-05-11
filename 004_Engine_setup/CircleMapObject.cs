@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -76,6 +77,35 @@ public class CircleMapObject:CircleObjectBase{
 
     void ResolveCollisions(CollisionInfo pCol)
     {
+
+
+        if (pCol.other.owner is Teleporter)
+        {
+
+            MyGame myGame = (MyGame)Game.main;
+            Teleporter teleporter = (Teleporter)pCol.other.owner;
+            if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
+            {
+
+                myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].rotationOrigin + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+                lastTeleport = Time.time;
+                Console.WriteLine(velocity.Length());
+
+                velocity = velocity.Length() * 1.1f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+
+                //accelerationMultiplier = 0.75f;
+                Console.WriteLine(velocity.Length());
+            }else{
+                velocity.Reflect(bounciness, pCol.normal);
+            }
+
+            return;
+
+        }
+
+
+
+
         if (pCol.other.owner is Line)
         {
             
@@ -97,6 +127,12 @@ public class CircleMapObject:CircleObjectBase{
                 return;
             }
 
+        }
+
+        if (pCol.other.owner is BouncyFloor)
+        {
+            velocity.Reflect(1.1f, pCol.normal);
+            return;
         }
 
 
