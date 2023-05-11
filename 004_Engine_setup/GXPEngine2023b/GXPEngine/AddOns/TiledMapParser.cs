@@ -435,36 +435,102 @@ namespace TiledMapParser
 		}
 	}
 
-	[XmlRootAttribute("object")]
-	public class TiledObject : PropertyContainer {
+	[XmlRootAttribute("polyline")]
+	public class PolyLine : PropertyContainer
+	{
 		[XmlAttribute("id")]
 		public int ID;
 		[XmlAttribute("gid")]
-		public uint GID=0xffffffff;
+		public uint GID = 0xffffffff;
 		// Tiled's GID (with two flip bits) is processed into these three fields, after calling Initialize:
-		public int ImageID=-1;
-		public bool MirrorX = false;
-		public bool MirrorY = false;
-		[XmlAttribute("rotation")]
-		public float Rotation = 0;
-		[XmlAttribute("name")]
-		public string Name;
-		// Fix for breaking change in Tiled 1.9:
-		public string Type {
-			get {
-				if (type != null) return type; else return Class;
+		[XmlAttribute("points")]
+		public string Points;
+		public string Type
+		{
+			get
+			{
+				if (type != null) return type; else return myClass;
 			}
-			set {
+			set
+			{
 				type = value;
 			}
 		}
 		[XmlAttribute("type")]
 		public string type;
 		[XmlAttribute("class")]
-		public string Class;
-		[XmlAttribute("width")]		// width in pixels
+		public string myClass;
+
+	}
+
+	[XmlRootAttribute("polygon")]
+	public class Polygon : PropertyContainer
+	{
+		[XmlAttribute("id")]
+		public int ID;
+		[XmlAttribute("gid")]
+		public uint GID = 0xffffffff;
+		// Tiled's GID (with two flip bits) is processed into these three fields, after calling Initialize:
+		[XmlAttribute("points")]
+		public string Points;
+		public string Type
+		{
+			get
+			{
+				if (type != null) return type; else return myClass;
+			}
+			set
+			{
+				type = value;
+			}
+		}
+		[XmlAttribute("type")]
+		public string type;
+		[XmlAttribute("class")]
+		public string myClass;
+
+	}
+
+	[XmlRootAttribute("object")]
+	public class TiledObject : PropertyContainer
+	{
+		[XmlAttribute("id")]
+		public int ID;
+		[XmlAttribute("gid")]
+		public uint GID = 0xffffffff;
+		[XmlElement("polyline")]
+		public PolyLine polyLines;
+		[XmlElement("polygon")]
+		public Polygon polygonPoints;
+		// Tiled's GID (with two flip bits) is processed into these three fields, after calling Initialize:
+		public int ImageID = -1;
+		public bool MirrorX = false;
+		public bool MirrorY = false;
+		[XmlAttribute("rotation")]
+		public float Rotation = 0;
+		[XmlAttribute("name")]
+		public string Name;
+		// Hotfix because Tiled 1.9 breaks compatibility!:
+		public string Type
+		{
+			get
+			{
+				if (type != null) return type; else return myClass;
+			}
+			set
+			{
+				type = value;
+			}
+		}
+		[XmlAttribute("type")]
+		public string type;
+		[XmlAttribute("class")]
+		public string myClass;
+
+
+		[XmlAttribute("width")]     // width in pixels
 		public float Width;
-		[XmlAttribute("height")]	// height in pixels
+		[XmlAttribute("height")]    // height in pixels
 		public float Height;
 		[XmlAttribute("x")]
 		public float X;
@@ -472,51 +538,62 @@ namespace TiledMapParser
 		public float Y;
 		[XmlElement("text")]
 		public Text textField;
-		
+
 		/// <summary>
 		/// Call this method to initialize the MirrorX, MirrorY and ImageID fields.
 		/// (The GID value read from the file encodes all of this information.)
 		/// </summary>
-		public void Initialize() {
-			if (GID != 0xffffffff) {
+		public void Initialize()
+		{
+			if (GID != 0xffffffff)
+			{
 				ImageID = (int)(GID & 0x3fffffff);
 				MirrorX = (GID & 0x80000000) > 0;
 				MirrorY = (GID & 0x40000000) > 0;
 			}
 		}
 
-		override public string ToString() {
-			return "Object: " + Name + " ID: " + ID + " Type: " + Type + " coordinates: (" + X + "," + Y + ") dimensions: (" + Width + "," + Height + ")\n";	
+		override public string ToString()
+		{
+			return "Object: " + Name + " ID: " + ID + " Type: " + Type + " coordinates: (" + X + "," + Y + ") dimensions: (" + Width + "," + Height + ")\n";
 		}
 	}
 
-	public class TiledUtils {
+	public class TiledUtils
+	{
 		/// <summary>
 		/// This translates a Tiled color string to a uint that can be used as a GXPEngine Sprite color.
 		/// </summary>
-		public static uint GetColor(string htmlColor) {
-			if (htmlColor.Length == 9) {
+		public static uint GetColor(string htmlColor)
+		{
+			if (htmlColor.Length == 9)
+			{
 				return (uint)(
-				    (Convert.ToInt32 (htmlColor.Substring (3, 2), 16) << 24) +		// R
-				    (Convert.ToInt32 (htmlColor.Substring (5, 2), 16) << 16) +		// G
-				    (Convert.ToInt32 (htmlColor.Substring (7, 2), 16) << 8) +		// B
-				    (Convert.ToInt32 (htmlColor.Substring (1, 2), 16)));			// Alpha
-			} else if (htmlColor.Length == 7) {
+					(Convert.ToInt32(htmlColor.Substring(3, 2), 16) << 24) +        // R
+					(Convert.ToInt32(htmlColor.Substring(5, 2), 16) << 16) +        // G
+					(Convert.ToInt32(htmlColor.Substring(7, 2), 16) << 8) +     // B
+					(Convert.ToInt32(htmlColor.Substring(1, 2), 16)));          // Alpha
+			}
+			else if (htmlColor.Length == 7)
+			{
 				return (uint)(
-				    (Convert.ToInt32 (htmlColor.Substring (1, 2), 16) << 24) +		// R
-				    (Convert.ToInt32 (htmlColor.Substring (3, 2), 16) << 16) +		// G
-				    (Convert.ToInt32 (htmlColor.Substring (5, 2), 16) << 8) +		// B
-					0xFF);															// Alpha
-			} else {
-				throw new Exception ("Cannot recognize color string: " + htmlColor);
+					(Convert.ToInt32(htmlColor.Substring(1, 2), 16) << 24) +        // R
+					(Convert.ToInt32(htmlColor.Substring(3, 2), 16) << 16) +        // G
+					(Convert.ToInt32(htmlColor.Substring(5, 2), 16) << 8) +     // B
+					0xFF);                                                          // Alpha
+			}
+			else
+			{
+				throw new Exception("Cannot recognize color string: " + htmlColor);
 			}
 		}
 
 		/// <summary>
 		/// This method converts a raw tile number read from a tile layer to a mirrorX value.
 		/// </summary>
-		public static bool GetMirrorX(uint tileID) {
-			bool flipHor  = (tileID & 0x80000000) > 0;
+		public static bool GetMirrorX(uint tileID)
+		{
+			bool flipHor = (tileID & 0x80000000) > 0;
 			bool flipVert = (tileID & 0x40000000) > 0;
 			bool flipDiag = (tileID & 0x20000000) > 0;
 			return flipHor ^ flipVert ^ flipDiag; // flipped if odd number of flips
@@ -525,15 +602,19 @@ namespace TiledMapParser
 		/// <summary>
 		/// This method converts a raw tile number read from a tile layer to a rotation value in degrees.
 		/// </summary>
-		public static float GetRotation(uint tileID) {
+		public static float GetRotation(uint tileID)
+		{
 			bool flipHor = (tileID & 0x80000000) > 0;
 			bool flipVert = (tileID & 0x40000000) > 0;
 			bool flipDiag = (tileID & 0x20000000) > 0;
 			bool flipped = flipHor ^ flipVert ^ flipDiag; // flipped if odd number of flips
-			float rotation = ((tileID>>29) & 3) * 90;
-			if (flipped) {
-				return (360-rotation)%360;
-			} else {
+			float rotation = ((tileID >> 29) & 3) * 90;
+			if (flipped)
+			{
+				return (360 - rotation) % 360;
+			}
+			else
+			{
 				return rotation;
 			}
 		}
@@ -542,7 +623,8 @@ namespace TiledMapParser
 		/// This method converts a raw tile number read from a tile layer to a pure image ID, 
 		/// that can be used with Map.GetTileSet.
 		/// </summary>
-		public static int GetTileFrame(uint tileID) {
+		public static int GetTileFrame(uint tileID)
+		{
 			return (int)(tileID & 0x1fffffff);
 		}
 	}

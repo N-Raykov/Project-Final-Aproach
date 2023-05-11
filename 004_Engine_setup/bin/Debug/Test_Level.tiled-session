@@ -1,0 +1,47 @@
+{
+    "activeFile": "Test_Level.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "D:/University/Year 1/Term 2/Game Programming/ECM1V.EA_Raykov_Nikola/Project/GXPEngine/bin/Debug/Level 1.tmx": {
+            "scale": 3,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 184.5,
+                "y": 140.5
+            }
+        },
+        "D:/University/Year 1/Term 2/Game Programming/ECM1V.EA_Raykov_Nikola/Project/GXPEngine/bin/Debug/Level 1.tmx#Terrain (16x16)": {
+            "scaleInDock": 1
+        },
+        "Test_Level.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 360.33333333333326,
+                "y": 128.33333333333331
+            }
+        },
+        "Test_Level.tmx#Visual test": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "D:/University/Year 1/Term 4/Project-Final-Aproach/004_Engine_setup/bin/Debug",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "Test_Level.tmx"
+    ],
+    "project": "Test_Level.tiled-project",
+    "recentFiles": [
+        "Test_Level.tmx",
+        "D:/University/Year 1/Term 2/Game Programming/ECM1V.EA_Raykov_Nikola/Project/GXPEngine/bin/Debug/Level 1.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

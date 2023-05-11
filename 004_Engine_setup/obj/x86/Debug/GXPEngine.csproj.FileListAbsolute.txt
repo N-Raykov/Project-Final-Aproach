@@ -30,3 +30,10 @@ C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\D
 C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.exe
 C:\Users\anton\Documents\GitHub\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.pdb
+D:\University\Year 1\Term 4\Project-Final-Aproach\004_Engine_setup\bin\Debug\GXPEngine.exe.config
+D:\University\Year 1\Term 4\Project-Final-Aproach\004_Engine_setup\bin\Debug\GXPEngine.exe
+D:\University\Year 1\Term 4\Project-Final-Aproach\004_Engine_setup\bin\Debug\GXPEngine.pdb
+D:\University\Year 1\Term 4\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
+D:\University\Year 1\Term 4\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+D:\University\Year 1\Term 4\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.exe
+D:\University\Year 1\Term 4\Project-Final-Aproach\004_Engine_setup\obj\x86\Debug\GXPEngine.pdb
