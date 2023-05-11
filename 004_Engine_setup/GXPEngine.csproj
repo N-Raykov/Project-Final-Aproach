@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ball.cs" />
     <Compile Include="BouncyFloor.cs" />
     <Compile Include="BoxTest.cs" />
     <Compile Include="CircleObjectBase.cs" />
