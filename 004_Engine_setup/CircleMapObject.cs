@@ -19,12 +19,18 @@ public class CircleMapObject:CircleObjectBase{
         isMoving = moving;
         Draw(230, 200, 0);
         _density = 2f;//10f
-        friction = 0.75f;
+        friction = 0.8f;
 
     }
     protected override void Move() {
-        //velocity.x -= 2;
-        velocity.x *= friction;
+        //if (velocity.y == 0)
+        //{
+        //    Console.WriteLine("I want to die");
+        //    velocity.x *= friction;
+        //}
+        if (velocity.y<=0)
+            velocity.x *= friction;
+
         velocity += acceleration * accelerationMultiplier;
 
         bool repeat = true;
@@ -38,7 +44,7 @@ public class CircleMapObject:CircleObjectBase{
             CollisionInfo colInfo = engine.MoveUntilCollision(myCollider, velocity);
             if (colInfo != null)
             {
-                if (colInfo.timeOfImpact < 0.01f) repeat = true;
+                if (colInfo.timeOfImpact < 0.01f) repeat = true;//0.01f
                 ResolveCollisions(colInfo);
             }
             iteration++;
@@ -72,7 +78,7 @@ public class CircleMapObject:CircleObjectBase{
     {
         if (pCol.other.owner is Line)
         {
-
+            
             Line segment = (Line)pCol.other.owner;
             if (segment.isRotating)
             {
@@ -91,11 +97,6 @@ public class CircleMapObject:CircleObjectBase{
                 return;
             }
 
-        }
-
-        if (pCol.other.owner is Enemy)
-        {
-            velocity.Reflect(bounciness, pCol.normal);
         }
 
 

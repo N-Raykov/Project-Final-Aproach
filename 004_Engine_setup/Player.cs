@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Drawing.Text;
 using System.Dynamic;
 using System.Threading;
 using GXPEngine;
@@ -20,12 +21,14 @@ class Player : CircleObjectBase {
     const int MOVE = 1;
     const int JUMP = 2;
     const int FALL = 3;
+    const int ROLLING = 4;
+    const int FLYING = 5;
     int jumpCooldown = 100;
     int lastJumpTime = -100000;
 
     public Player(Vec2 startPosition,int pRadius) : base(pRadius,startPosition) {
         bounciness = 0f;//0.2f
-        friction = 0.99f;
+        friction = 0.5f;
         Draw(0, 255, 0);
     }
 
@@ -60,6 +63,34 @@ class Player : CircleObjectBase {
             iteration++;
         }
 
+        List<Collider> overlaps = engine.GetOverlaps(myCollider);
+
+        foreach (Collider col in overlaps)
+        {
+            //Console.WriteLine(1);
+            if (col.owner is Teleporter)
+            {
+
+                MyGame myGame = (MyGame)Game.main;
+                Teleporter teleporter= (Teleporter)col.owner;
+                if (myGame.teleportManager.portals[0] != null&& myGame.teleportManager.portals[1] != null&& (Time.time - lastTeleport >= teleporterCooldown))
+                {
+                    
+                    myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].myCollider.position+radius* myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+                    lastTeleport = Time.time;
+                    Console.WriteLine(velocity.Length());
+
+                    velocity=velocity.Length()*1.2f* myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+
+                    //accelerationMultiplier = 0.75f;
+                    Console.WriteLine(velocity.Length());
+                }
+
+                
+
+            }
+        }
+
         //base.Move();
 
         UpdateScreenPosition();
@@ -74,6 +105,7 @@ class Player : CircleObjectBase {
         //    state = MOVE;
         if (pCol.normal.y < 0&&Mathf.Abs(pCol.normal.x)<0.9f)
             state = MOVE;
+        //accelerationMultiplier = 1f;
 
         if (pCol.other.owner is Line)
         {
@@ -89,16 +121,25 @@ class Player : CircleObjectBase {
 
                 return;
             }
-            else { 
+            else {
+                Line segment1 = (Line)pCol.other.owner;
+                if (segment1.start.GetAngleDegreesTwoPoints(segment1.end) != 0){
+                    //Console.WriteLine(1);
+                    state = ROLLING;
+                }
+                else{
+                    state = MOVE;
+                }
+
                 velocity.Reflect(bounciness, pCol.normal);
                 return;
             }
 
         }
 
-        if (pCol.other.owner is Enemy)
-        {
-            velocity.Reflect(bounciness, pCol.normal);
+        if (pCol.other.owner is BouncyFloor) {
+            velocity.Reflect(1.1f, pCol.normal);
+            state = JUMP;
         }
 
 
@@ -125,7 +166,16 @@ class Player : CircleObjectBase {
         {
             var result = ((MyGame)game).camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
             Vec2 shotDirection = (new Vec2(result.x, result.y) - position).Normalized();
-            Projectile bullet = new Projectile(position, shotDirection, Projectile._radius,tag);
+            Projectile bullet = new Projectile(position, shotDirection, Projectile._radius,tag,0);
+            parent.AddChild(bullet);
+            lastShotTime = Time.time;
+        }
+
+        if (Input.GetMouseButton(1) && (Time.time - lastShotTime >= cooldown))
+        {
+            var result = ((MyGame)game).camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
+            Vec2 shotDirection = (new Vec2(result.x, result.y) - position).Normalized();
+            Projectile bullet = new Projectile(position, shotDirection, Projectile._radius, tag, 1);
             parent.AddChild(bullet);
             lastShotTime = Time.time;
         }
@@ -133,24 +183,9 @@ class Player : CircleObjectBase {
 
 	protected override void Update() {
         HandleInput();
-        //Console.WriteLine(velocity);
-        //switch (state)
-        //{
-
-        //    case MOVE:
-
-        //        break;
-        //    case JUMP:
-
-        //        break;
-        //    case FALL:
-
-        //        break;
-
-
-        //}
 
         Move();
+        Shoot();
     }
 
     void HandleInput()
@@ -183,57 +218,80 @@ class Player : CircleObjectBase {
 
 
         Vec2 moveDirection = new Vec2(0, 0);
+        if (state != ROLLING) {
 
-        if (Input.GetKey(Key.LEFT))
-        {
-            moveDirection -= new Vec2(1, 0);
-        }
-        if (Input.GetKey(Key.RIGHT))
-        {
-            moveDirection += new Vec2(1, 0);
+            if (Input.GetKey(Key.LEFT))
+            {
+                moveDirection -= new Vec2(1, 0);
+            }
+            if (Input.GetKey(Key.RIGHT))
+            {
+                moveDirection += new Vec2(1, 0);
+            }
+
+            if (Input.GetKey(Key.UP) && state == MOVE)
+            {
+                //Console.WriteLine(1);
+                state = JUMP;
+                velocity -= new Vec2(0, 20);
+
+            }
+
         }
 
-        if (Input.GetKey(Key.UP) && state == MOVE)
-        {
-            //Console.WriteLine(1);
-            state = JUMP;
-            velocity -= new Vec2(0, 20);
-
-        }
 
         velocity.x += moveDirection.x * speedEachFrame; // This seems a bit strict to me for a physics based game...
-        if (velocity.x > maxSpeedHorizontal && velocity.y <= 0)//when falling down after the jump need to cap the speed while making sure the speed when going down slope doesnt cap
-            velocity.x = maxSpeedHorizontal;
-        if (velocity.x < -maxSpeedHorizontal && velocity.y <= 0)
-            velocity.x = -maxSpeedHorizontal;
 
+        //Console.WriteLine(state);
+        //when falling down after the jump need to cap the speed while making sure the speed when going down slope doesnt cap
+        switch (state){
+            case MOVE:
+                CapSpeed();
 
-        if (state == FALL) {
-            if (velocity.x > maxSpeedHorizontal)
-                velocity.x = maxSpeedHorizontal;
-            if (velocity.x < -maxSpeedHorizontal)
-                velocity.x = -maxSpeedHorizontal;
-        }
+                if (velocity.y > 0)
+                {
+                    state = FALL;
+                }
 
-        //Console.WriteLine(moveDirection.x+" "+velocity.y);
-        if (moveDirection.x == 0 && velocity.y == 0) {
-            velocity.x = 0;
-        }
-
-        if (state== JUMP&&velocity.y>0)
-        {
-            state = FALL;
+                if (moveDirection.x == 0 && velocity.y == 0)
+                {
+                    velocity.x = 0;
+                }
+                break;
+            case JUMP:
+                CapSpeed();
+                if (velocity.y > 0){
+                    state = FALL;
+                }
+                break;
+            case FALL:
+                CapSpeed();
+                break;
+            case ROLLING:
+                if (velocity.y < 0) {
+                    //Console.WriteLine(1);
+                    CapSpeed();
+                    //velocity.x *= friction;
+                }
+                    
+                break;
+        
         }
 
 
         velocity += acceleration * accelerationMultiplier;
-        //if (velocity.y > maxSpeedVertical)
-         //   velocity.y= maxSpeedVertical;
-        //velocity.x *= friction;
-        Console.WriteLine(velocity+" "+state);
+
+        //Console.WriteLine(velocity+" "+state);
 
 
 
+    }
+
+    void CapSpeed() {
+        if (velocity.x > maxSpeedHorizontal)
+            velocity.x = maxSpeedHorizontal;
+        if (velocity.x < -maxSpeedHorizontal)
+            velocity.x = -maxSpeedHorizontal;
     }
 
     public void TakeDamage(int pDamage) { 
