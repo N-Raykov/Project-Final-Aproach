@@ -463,7 +463,35 @@ namespace TiledMapParser
 
     }
 
-    [XmlRootAttribute("object")]
+	[XmlRootAttribute("polygon")]
+	public class Polygon : PropertyContainer
+	{
+		[XmlAttribute("id")]
+		public int ID;
+		[XmlAttribute("gid")]
+		public uint GID = 0xffffffff;
+		// Tiled's GID (with two flip bits) is processed into these three fields, after calling Initialize:
+		[XmlAttribute("points")]
+		public string Points;
+		public string Type
+		{
+			get
+			{
+				if (type != null) return type; else return myClass;
+			}
+			set
+			{
+				type = value;
+			}
+		}
+		[XmlAttribute("type")]
+		public string type;
+		[XmlAttribute("class")]
+		public string myClass;
+
+	}
+
+	[XmlRootAttribute("object")]
 	public class TiledObject : PropertyContainer {
 		[XmlAttribute("id")]
 		public int ID;
@@ -471,6 +499,8 @@ namespace TiledMapParser
 		public uint GID=0xffffffff;
 		[XmlElement("polyline")]
 		public PolyLine polyLines;
+		[XmlElement("polygon")]
+		public Polygon polygonPoints;
 		// Tiled's GID (with two flip bits) is processed into these three fields, after calling Initialize:
 		public int ImageID=-1;
 		public bool MirrorX = false;

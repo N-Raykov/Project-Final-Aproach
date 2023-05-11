@@ -16,17 +16,24 @@ class Wall : AnimationSprite
 
     public Wall(TiledObject obj = null) : base("tilesheet.png", 1, 1, -1, false, false)
     {
-        Initialize(obj);
+        if(obj.polyLines != null)
+        {
+            Initialize(obj, obj.polyLines.Points);
+        } 
+        else if(obj.polygonPoints != null)
+        {
+            Initialize(obj, obj.polygonPoints.Points);
+        }
     }
 
-    void Initialize(TiledObject obj)
+    void Initialize(TiledObject obj, string nodes)
     {
         alpha = 0.0f;
 
-        Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, obj.polyLines.Points);
+        Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, nodes);
 
         //Define the relative positions of the nodes and put them in a list
-        List<string> nodeLocations = obj.polyLines.Points.Split(' ').ToList();
+        List<string> nodeLocations = nodes.Split(' ').ToList();
 
         foreach (string str in nodeLocations)
         {
@@ -35,6 +42,11 @@ class Wall : AnimationSprite
             float y = float.Parse(components[1]);
             Vec2 vector = new Vec2(x + obj.X, y + obj.Y);
             vectorList.Add(vector);
+        }
+
+        if (obj.polygonPoints.Points != null)
+        {
+            vectorList.Add(vectorList[0]);
         }
 
         //Create lines between each of the objects and store them in a list
