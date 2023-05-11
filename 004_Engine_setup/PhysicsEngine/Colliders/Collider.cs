@@ -7,7 +7,7 @@ namespace Physics {
 	/// A superclass for all shapes in our physics engine (like circles, lines, AABBs, ...)
 	/// </summary>
 	public class Collider {
-		public GameObject owner;
+		public readonly GameObject owner;
 		public Vec2 position;
 
 		public Collider(GameObject pOwner, Vec2 startPosition) {

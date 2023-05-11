@@ -57,20 +57,14 @@ class Projectile : CircleObjectBase {
         if (pCol != null)
         {
 
-            if (pCol.other.owner is Line&&pCol.other is LineSegment && portalNumber!=-1) {
+            if (pCol.other.owner is Line&&portalNumber!=-1) {
                 MyGame myGame = (MyGame)Game.main;
-                LineSegment line = (LineSegment)pCol.other;
                 if (myGame.teleportManager.portals[portalNumber] != null) {
 
                     myGame.teleportManager.portals[portalNumber].Destroy();
-                    
-                    //Console.WriteLine(myGame.teleportManager.portals[portalNumber]);
+                    Console.WriteLine(myGame.teleportManager.portals[portalNumber]);
                 }
-                float rotation = line.start.GetAngleDegreesTwoPoints(line.end);
                 myGame.teleportManager.portals[portalNumber] = new Teleporter(myCollider.position, portalNumber,pCol.normal);
-                myGame.teleportManager.portals[portalNumber].Rotate(rotation);
-
-
                 parent.AddChild(myGame.teleportManager.portals[portalNumber]);
                 //parent.AddChild(new Teleporter(myCollider.position,portalNumber));
                 this.LateDestroy();
