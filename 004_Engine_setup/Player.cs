@@ -23,8 +23,7 @@ class Player : CircleObjectBase {
     const int FALL = 3;
     const int ROLLING = 4;
     const int FLYING = 5;
-    int jumpCooldown = 100;
-    int lastJumpTime = -100000;
+
 
     public Player(Vec2 startPosition,int pRadius) : base(pRadius,startPosition) {
         bounciness = 0f;//0.2f
@@ -63,36 +62,6 @@ class Player : CircleObjectBase {
             iteration++;
         }
 
-        List<Collider> overlaps = engine.GetOverlaps(myCollider);
-
-        foreach (Collider col in overlaps)
-        {
-            //Console.WriteLine(1);
-            if (col.owner is Teleporter)
-            {
-
-                MyGame myGame = (MyGame)Game.main;
-                Teleporter teleporter= (Teleporter)col.owner;
-                if (myGame.teleportManager.portals[0] != null&& myGame.teleportManager.portals[1] != null&& (Time.time - lastTeleport >= teleporterCooldown))
-                {
-                    
-                    myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].myCollider.position+radius* myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
-                    lastTeleport = Time.time;
-                    Console.WriteLine(velocity.Length());
-
-                    velocity=velocity.Length()*1.2f* myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
-
-                    //accelerationMultiplier = 0.75f;
-                    Console.WriteLine(velocity.Length());
-                }
-
-                
-
-            }
-        }
-
-        //base.Move();
-
         UpdateScreenPosition();
 
 
@@ -106,6 +75,28 @@ class Player : CircleObjectBase {
         if (pCol.normal.y < 0&&Mathf.Abs(pCol.normal.x)<0.9f)
             state = MOVE;
         //accelerationMultiplier = 1f;
+
+        if (pCol.other.owner is Teleporter)
+        {
+
+            MyGame myGame = (MyGame)Game.main;
+            Teleporter teleporter = (Teleporter)pCol.other.owner;
+            if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
+            {
+
+                myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].rotationOrigin + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+                lastTeleport = Time.time;
+                Console.WriteLine(velocity.Length());
+
+                velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+
+                //accelerationMultiplier = 0.75f;
+                Console.WriteLine(velocity.Length());
+            }
+
+            return;
+
+        }
 
         if (pCol.other.owner is Line)
         {
