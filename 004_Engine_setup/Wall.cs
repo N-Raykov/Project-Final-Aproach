@@ -10,59 +10,55 @@ using GXPEngine;
 
 class Wall : AnimationSprite
 {
-    Line line;
-    Vec2 start;
-    Vec2 end;
     bool created = false;
+    List<Vec2> vectorList = new List<Vec2>();
+    List<Line> lineList = new List<Line>();
 
     public Wall(TiledObject obj = null) : base("tilesheet.png", 1, 1, -1, false, false)
     {
         Initialize(obj);
-
-        //Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, obj.polyLines.Points);
     }
 
     void Initialize(TiledObject obj)
     {
         alpha = 0.0f;
 
-        // Define the position of one corner of the rectangle
-        float x1 = obj.X;
-        float y1 = obj.Y;
+        Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, obj.polyLines.Points);
 
-        // Define the width and height of the rectangle
-        float width = obj.Width;
-        float height = obj.Height;
+        //Define the relative positions of the nodes and put them in a list
+        List<string> nodeLocations = obj.polyLines.Points.Split(' ').ToList();
 
-        // Define the angle of rotation of the rectangle in radians
-        float angleInRadians = obj.Rotation * ((float)Math.PI/ 180);
+        foreach (string str in nodeLocations)
+        {
+            string[] components = str.Split(',');
+            float x = float.Parse(components[0]);
+            float y = float.Parse(components[1]);
+            Vec2 vector = new Vec2(x + obj.X, y + obj.Y);
+            vectorList.Add(vector);
+        }
 
-        // Calculate the coordinates of the other three corners of the rectangle
-        float sin = (float)Math.Sin(angleInRadians);
-        float cos = (float)Math.Cos(angleInRadians);
-        float x2 = x1 + width * cos;
-        float y2 = y1 + width * sin;
-        float x3 = x2 - height * sin;
-        float y3 = y2 + height * cos;
-        float x4 = x1 - height * sin;
-        float y4 = y1 + height * cos;
+        //Create lines between each of the objects and store them in a list
+        for (int i = 0; i < vectorList.Count - 1; i++)
+        {
+            Vec2 start = vectorList[i];
+            Vec2 end = vectorList[i + 1];
+            Line line = new Line(start, end);
+            lineList.Add(line);
+        }
 
-        // Output the coordinates of the four corners
-        //Console.WriteLine("Corner 1: ({0},{1})", x1, y1);
-        //Console.WriteLine("Corner 2: ({0},{1})", x2, y2);
-        //Console.WriteLine("Corner 3: ({0},{1})", x3, y3);
-        //Console.WriteLine("Corner 4: ({0},{1})", x4, y4);
+        Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, lineList.Count);
 
-        start = new Vec2(x1, y1);
-        end = new Vec2(x3, y3);
-        line = new Line(start, end);
+        
     }
 
     void Update()
     {
         if (created == false)
         {
-            parent.AddChild(line);
+            foreach (Line line in lineList)
+            {
+                parent.AddChild(line);
+            }
             created = true;
         }
     }

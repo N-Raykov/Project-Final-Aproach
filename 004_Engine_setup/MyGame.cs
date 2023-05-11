@@ -4,7 +4,7 @@ using GXPEngine;
 
 public class MyGame : Game
 {
-    string startLevel = "Game_Puzzle_TileSet_neeew.tmx";
+    string startLevel = "Test_Level.tmx";
     string nextLevel;
 	public Camera camera;
 
@@ -13,7 +13,6 @@ public class MyGame : Game
 
         RenderMain = false;
         camera = new Camera(0, 0, 1200, 800);
-        //player.AddChild(camera);
 
         LoadLevel(startLevel);
 
