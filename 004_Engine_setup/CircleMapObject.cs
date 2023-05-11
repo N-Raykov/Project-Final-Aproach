@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 using GXPEngine;
-using GXPEngine.Core;
 using Physics;
 
 public class CircleMapObject:CircleObjectBase{
 
+    bool hadPortalCollisionThisFrame = false;
 
     public CircleMapObject(int pRadius, Vec2 pPosition, Vec2 pVelocity = new Vec2(), bool moving = true) : base(pRadius,pPosition)
     {
@@ -24,35 +24,67 @@ public class CircleMapObject:CircleObjectBase{
 
     }
     protected override void Move() {
-        //if (velocity.y == 0)
-        //{
-        //    Console.WriteLine("I want to die");
-        //    velocity.x *= friction;
-        //}
+
         if (velocity.y<=0)
             velocity.x *= friction;
+
+        if (velocity.Length() > maxSpeed)
+        {
+            velocity = velocity.Normalized() * maxSpeed;
+        }
 
         velocity += acceleration * accelerationMultiplier;
 
         bool repeat = true;
         int iteration = 0;
+        float remainingMovement = 1;
         while (repeat && iteration < 2)
         {
             repeat = false;
 
             oldPosition = position;
             position += velocity;
-            CollisionInfo colInfo = engine.MoveUntilCollision(myCollider, velocity);
+            CollisionInfo colInfo = engine.MoveUntilCollision(myCollider, velocity * remainingMovement);
             if (colInfo != null)
             {
-                if (colInfo.timeOfImpact < 0.01f) repeat = true;//0.01f
+                //if (colInfo.timeOfImpact < 0.01f) 
+                repeat = true;
+                remainingMovement = 1 - colInfo.timeOfImpact; // take it from here...
                 ResolveCollisions(colInfo);
             }
             iteration++;
         }
 
 
-        base.Move();
+        List<Collider> overlaps = engine.GetOverlapsSolids(myCollider);
+
+        foreach (Collider pCol in overlaps)
+        {
+
+            if (pCol.owner is Teleporter && !hadPortalCollisionThisFrame)
+            {
+                //Console.WriteLine(1);
+                MyGame myGame = (MyGame)Game.main;
+                Teleporter teleporter = (Teleporter)pCol.owner;
+                if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
+                {
+
+                    myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].rotationOrigin + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+                    lastTeleport = Time.time;
+                    Console.WriteLine(velocity.Length());
+
+                    velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+
+                    //accelerationMultiplier = 0.75f;
+                    Console.WriteLine(velocity.Length());
+                }
+
+
+
+            }
+        }
+
+
         UpdateScreenPosition();
     }
 
@@ -81,7 +113,7 @@ public class CircleMapObject:CircleObjectBase{
 
         if (pCol.other.owner is Teleporter)
         {
-
+            hadPortalCollisionThisFrame = true;
             MyGame myGame = (MyGame)Game.main;
             Teleporter teleporter = (Teleporter)pCol.other.owner;
             if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
@@ -152,6 +184,11 @@ public class CircleMapObject:CircleObjectBase{
         }
 
 
+    }
+
+    protected override void Update() {
+        hadPortalCollisionThisFrame = false;
+        base.Update();
     }
 
 }

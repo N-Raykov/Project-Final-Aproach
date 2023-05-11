@@ -23,7 +23,7 @@ public class MyGame : Game
         AddChild(new Line(new Vec2(2000, 1600), new Vec2(2500, 1600)));
 
 
-        //AddChild(new Line(new Vec2(500, 600), new Vec2(1500, 600)));
+        AddChild(new Line(new Vec2(500, 600), new Vec2(1500, 600)));
 
 
 
