@@ -43,6 +43,7 @@
     <Compile Include="Ball.cs" />
     <Compile Include="BouncyFloor.cs" />
     <Compile Include="BoxTest.cs" />
+    <Compile Include="CameraManager.cs" />
     <Compile Include="CircleObjectBase.cs" />
     <Compile Include="CircleMapObject.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\AddOns\Camera.cs" />

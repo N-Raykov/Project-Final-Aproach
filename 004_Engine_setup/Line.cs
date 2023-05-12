@@ -22,14 +22,16 @@ public class Line:EasyDraw
     protected byte r = 255;
     protected byte g = 255;
     protected byte b = 255;
+    bool isTrigger;
 
     public uint lineWidth = 1;
 
     protected ColliderManager engine;
     protected List<Physics.Collider> colliders = new List<Physics.Collider> { };
 
-    public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false):base(2000,2000)//its 1500 1500 just to make sure it works for the rotating lines
+    public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false,bool pIsTrigger=false):base(1,1)//its 1500 1500 just to make sure it works for the rotating lines
     {
+        isTrigger = pIsTrigger;
         isRotating= pIsRotating;
         start = pStart;
         end = pEnd;
