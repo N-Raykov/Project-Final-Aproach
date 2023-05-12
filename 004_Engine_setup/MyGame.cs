@@ -23,7 +23,7 @@ public class MyGame : Game
         //OnAfterStep += CheckLoadLevel;
 
         RenderMain = false;
-        player = new Player(new Vec2(750, 750), 30);
+        player = new Player(new Vec2(750, 950), 30);
         camera = new Camera(0, 0, 1200, 800);
         player.AddChild(camera);
 
@@ -36,8 +36,8 @@ public class MyGame : Game
 
 
         AddChild(new Line(new Vec2(500, 600), new Vec2(1500, 600)));
-
-
+        AddChild(new Line(new Vec2(1500,600),new Vec2(1500,800)));
+        AddChild(new LaserShooter(new Vec2(750, 750)));
 
         //AddChild(new BouncyFloor(new Vec2(600,900),new Vec2(1000,900)));
         //AddChild(new CircleMapObject(30, new Vec2(1000, 500)));

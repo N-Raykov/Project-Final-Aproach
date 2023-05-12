@@ -42,6 +42,12 @@ public class Line:EasyDraw
             engine.AddSolidCollider(col);
     }
 
+    // This is a destructor - call by garbage collector
+    ~Line()
+    {
+        Console.WriteLine("GB removes line");
+    }
+
     protected override void OnDestroy()
     {
         foreach(Physics.Collider col in colliders)
