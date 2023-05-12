@@ -72,7 +72,8 @@ class Projectile : CircleObjectBase {
                         float rotation = line.start.GetAngleDegreesTwoPoints(line.end);
                         myGame.teleportManager.portals[portalNumber] = new Teleporter(myCollider.position - pCol.normal * radius / 2, portalNumber, pCol.normal);
                         myGame.teleportManager.portals[portalNumber].Rotate(rotation);
-
+                        if (portalNumber==0)
+                            myGame.teleportManager.portal1HasChanged= true;
 
                         parent.AddChild(myGame.teleportManager.portals[portalNumber]);
                         this.LateDestroy();

@@ -13,6 +13,7 @@ using Physics;
 
 public class LaserShooter:EasyDraw{
 
+    MyGame myGame = (MyGame)Game.main;
     float radius=20;
     const int LEFT = 1;
     const int RIGHT = 2;
@@ -71,7 +72,7 @@ public class LaserShooter:EasyDraw{
         laser2.Stroke(255, 0, 0);
         laser2.Line(start.x, start.y, end.x, end.y);//+radius
         laser2WasDrawn = true;
-        Console.WriteLine(1);
+        //Console.WriteLine(1);
         Vec2 vec = end - position;
         Vec2 normal = vec.Normal();
         Vec2 reverseNormal = vec.ReverseNormal();
@@ -83,6 +84,21 @@ public class LaserShooter:EasyDraw{
         laser2Col2 = new Line(start + reverseNormal * lineWidthHalf, end + reverseNormal * lineWidthHalf);
         parent.AddChild(laser2Col1);
         parent.AddChild(laser2Col2);
+
+    }
+
+    public void DestroyLaser2() {
+        if (myGame.teleportManager.portal1HasChanged) {
+            Console.WriteLine(1);
+            laser2.Clear(Color.Empty);
+            if (laser2Col1 != null)
+                laser2Col1.Destroy();
+            if (laser2Col2 != null)
+                laser2Col2.Destroy();
+            laser2WasDrawn = false;
+            myGame.teleportManager.portal1HasChanged = false;
+
+        }
 
     }
 
@@ -102,6 +118,7 @@ public class LaserShooter:EasyDraw{
 
     void Update() {
         Shoot(RIGHT);
+        DestroyLaser2();
     }
 
     void Shoot(int pSide) { 
