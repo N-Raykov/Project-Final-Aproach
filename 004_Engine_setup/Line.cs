@@ -26,7 +26,7 @@ public class Line:EasyDraw
     protected ColliderManager engine;
     protected List<Physics.Collider> colliders = new List<Physics.Collider> { };
 
-    public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false):base(2000,2000)//its 1500 1500 just to make sure it works for the rotating lines
+    public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false, bool isTrigger = false):base(2000,2000)//its 1500 1500 just to make sure it works for the rotating lines
     {
         isRotating= pIsRotating;
         start = pStart;
@@ -38,8 +38,16 @@ public class Line:EasyDraw
         colliders.Add(new Physics.Circle(this, start,0));
         colliders.Add(new Physics.Circle(this, end, 0));
         engine = ColliderManager.main;
-        foreach(Physics.Collider col in colliders)
-            engine.AddSolidCollider(col);
+        if (isTrigger == false)
+        {
+            foreach(Physics.Collider col in colliders)
+                engine.AddSolidCollider(col);
+        }
+        if (isTrigger == true)
+        {
+            foreach (Physics.Collider col in colliders)
+                engine.AddTriggerCollider(col);
+        }
     }
 
     protected override void OnDestroy()
@@ -54,7 +62,6 @@ public class Line:EasyDraw
         StrokeWeight(0);//was 0
         Stroke(red, green, blue);
         Line(start.x,start.y,end.x,end.y);
-
     }
 
     public void Rotate(float pRotation) {

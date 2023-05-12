@@ -97,7 +97,6 @@ class Projectile : CircleObjectBase {
             if (col.owner is Player&&owner != Player.tag)
             {
                 Player player = (Player)col.owner;
-                player.TakeDamage(damage);
                 this.LateDestroy();
             }
 

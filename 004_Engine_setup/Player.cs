@@ -63,6 +63,8 @@ class Player : CircleObjectBase {
 
         List<Collider> overlaps = engine.GetOverlapsSolids(myCollider);
 
+        List<Collider> triggerOverlaps = engine.GetOverlaps(myCollider);
+
         foreach (Collider pCol in overlaps)
         {
             
@@ -86,6 +88,15 @@ class Player : CircleObjectBase {
 
 
 
+            }
+        }
+
+        foreach (Collider pTrig in triggerOverlaps)
+        {
+            if (pTrig.owner is Line)
+            {
+                
+                pTrig.owner.Destroy();
             }
         }
 
@@ -180,7 +191,7 @@ class Player : CircleObjectBase {
 
         if (Input.GetMouseButton(0) && (Time.time - lastShotTime >= cooldown))
         {
-            var result = ((MyGame)game).camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
+            var result = ((MyGame)game).cameraManager.camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
             Vec2 shotDirection = (new Vec2(result.x, result.y) - position).Normalized();
             Projectile bullet = new Projectile(position, shotDirection, Projectile._radius,tag,0);
             parent.AddChild(bullet);
@@ -189,7 +200,7 @@ class Player : CircleObjectBase {
 
         if (Input.GetMouseButton(1) && (Time.time - lastShotTime >= cooldown))
         {
-            var result = ((MyGame)game).camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
+            var result = ((MyGame)game).cameraManager.camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
             Vec2 shotDirection = (new Vec2(result.x, result.y) - position).Normalized();
             Projectile bullet = new Projectile(position, shotDirection, Projectile._radius, tag, 1);
             parent.AddChild(bullet);
@@ -285,19 +296,5 @@ class Player : CircleObjectBase {
         if (velocity.x < -maxSpeedHorizontal)
             velocity.x = -maxSpeedHorizontal;
     }
-
-    public void TakeDamage(int pDamage) { 
-        hp-=pDamage;
-        if (hp <= 0) {
-            RemoveChild(((MyGame)game).camera);
-            parent.AddChild(((MyGame)game).camera);
-            (((MyGame)game).camera).x = myCollider.position.x;
-            (((MyGame)game).camera).y = myCollider.position.y;
-            this.LateDestroy();
-        }
-            
-    }
-
-
 }
 
