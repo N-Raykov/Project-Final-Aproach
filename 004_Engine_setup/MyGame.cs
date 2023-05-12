@@ -12,7 +12,7 @@ public class MyGame : Game
     Player player;
 	public MyGame() : base(1200, 800, false,false)
 	{
-        //RenderMain = false;
+        //RenderMain = false;   
 
         //camera = new Camera(0, 0, 1200, 800);
 

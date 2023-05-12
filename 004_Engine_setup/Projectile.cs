@@ -60,6 +60,19 @@ class Projectile : CircleObjectBase {
         {
             //Console.WriteLine(owner);
             if (pCol.other is LineSegment) {
+                if (pCol.other.owner is Line) {
+                    
+                    Line line = (Line)pCol.other.owner;
+                    Console.WriteLine(line.Owner);
+                    if (line.Owner is LaserShooter&&portalNumber!=-1) {
+                        this.LateDestroy();
+                        return;
+                    }
+                        
+
+                }
+
+
                 if (!(pCol.other.owner is Teleporter)) {
                     if (portalNumber != -1)
                     {

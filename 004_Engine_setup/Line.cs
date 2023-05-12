@@ -12,6 +12,8 @@ using TiledMapParser;
 
 public class Line:EasyDraw
 {
+
+    public GameObject Owner = null;
     public Vec2 start;
     public Vec2 end;
     public readonly Vec2 rotationOrigin;
@@ -84,6 +86,8 @@ public class Line:EasyDraw
     void Update() {
        
     }
-
+    public void SetOwner(GameObject pGameObject) { 
+        Owner= pGameObject;
+    }
 
 }

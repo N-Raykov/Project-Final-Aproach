@@ -48,7 +48,7 @@ public class LaserShooter:EasyDraw{
         parent.AddChild(laser1);
         //Console.WriteLine(position+" "+end);
         laser1.Clear(Color.Empty);
-        laser1.StrokeWeight(1);//was lineWidthHalf*2
+        laser1.StrokeWeight(lineWidthHalf * 2);//was lineWidthHalf*2
         laser1.Stroke(255,0,0);
         laser1.Line(position.x, position.y, end.x, end.y);//+radius
         Vec2 vec = end - position;
@@ -56,7 +56,9 @@ public class LaserShooter:EasyDraw{
         Vec2 reverseNormal = vec.ReverseNormal();
         //Console.WriteLine(position + " " + end);
         laser1Col1 = new Line(position+normal*lineWidthHalf,end+normal*lineWidthHalf);
+        laser1Col1.SetOwner(this);
         laser1Col2 = new Line(position + reverseNormal * lineWidthHalf, end + reverseNormal * lineWidthHalf);
+        laser1Col2.SetOwner(this);
         parent.AddChild(laser1Col1);
         parent.AddChild(laser1Col2);
 
@@ -72,7 +74,6 @@ public class LaserShooter:EasyDraw{
         laser2.Stroke(255, 0, 0);
         laser2.Line(start.x, start.y, end.x, end.y);//+radius
         laser2WasDrawn = true;
-        //Console.WriteLine(1);
         Vec2 vec = end - position;
         Vec2 normal = vec.Normal();
         Vec2 reverseNormal = vec.ReverseNormal();
@@ -81,7 +82,9 @@ public class LaserShooter:EasyDraw{
         if (laser2Col2!=null)
             laser2Col2.Destroy();
         laser2Col1 = new Line(start + normal * lineWidthHalf, end + normal * lineWidthHalf);
+        laser2Col1.SetOwner(this);
         laser2Col2 = new Line(start + reverseNormal * lineWidthHalf, end + reverseNormal * lineWidthHalf);
+        laser2Col2.SetOwner(this);
         parent.AddChild(laser2Col1);
         parent.AddChild(laser2Col2);
 
