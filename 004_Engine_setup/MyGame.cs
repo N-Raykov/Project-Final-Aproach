@@ -9,22 +9,18 @@ public class MyGame : Game
 
 	public Camera camera;
     public TeleportManager teleportManager;
-    Player player;
+
 	public MyGame() : base(1200, 800, false,false)
 	{
-        //RenderMain = false;
-        camera = new Camera(400, 800, 1200, 800);
+        RenderMain = false;
 
         teleportManager = new TeleportManager();
+
+        camera = new Camera(0, 0, 1200, 800);
 
         LoadLevel(startLevel);
         
         OnAfterStep += CheckLoadLevel;
-        camera.scale = 2;
-        AddChild(camera);
-        player = new Player(new Vec2(400, 800), 30);
-        AddChild(player);
-
 
         //RenderMain = false;
         //player = new Player(new Vec2(340, 800), 30);
@@ -80,10 +76,4 @@ public class MyGame : Game
 
         new MyGame().Start();
 	}
-
-    void Update() {
-        Console.WriteLine(player.x+" "+player.y);
-        camera.x = player.x;
-        camera.y=player.y;
-    }
 }
