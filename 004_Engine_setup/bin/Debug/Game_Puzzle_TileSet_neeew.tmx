@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="55" tilewidth="64" tileheight="64" infinite="0" nextlayerid="30" nextobjectid="165">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="55" tilewidth="64" tileheight="64" infinite="0" nextlayerid="30" nextobjectid="173">
  <tileset firstgid="1" name="1" tilewidth="64" tileheight="64" tilecount="256" columns="16">
   <image source="Platforms_Tile_Set_11_05_23.png" width="1024" height="1024"/>
  </tileset>
@@ -349,57 +349,18 @@
 </data>
  </layer>
  <objectgroup id="29" name="Object Layer 2">
-  <object id="107" class="Wall" x="1262" y="190">
-   <polyline points="0,0 18,450 466,450"/>
+  <object id="165" class="SpawnPoint" x="342" y="690" width="180" height="228"/>
+  <object id="169" class="Wall" x="64" y="192">
+   <polyline points="1216,512 1216,0 448,0 448,64 192,64 192,0 0,0 0,512 64,512 64,768 0,768 0,1280 192,1280 192,1216 448,1216 448,1280 768,1280 768,832 832,832"/>
   </object>
-  <object id="108" class="Wall" x="1676" y="640">
-   <polyline points="0,0 624,-4"/>
+  <object id="170" class="Wall" x="832" y="1024">
+   <polyline points="0,0 64,0 64,64 448,64 448,0 512,0 512,64 832,64 832,0 832,-384 512,-384 512,-320 448,-320"/>
   </object>
-  <object id="111" class="Wall" x="65.3333" y="1473.33">
-   <polyline points="0,0 190.67,-2.33508 191.737,-65.6169 445.333,-66.29 446.739,0.306719 767.667,-2.33333 765.693,-450.282 830.667,-449.33 830.541,-385.667 1214.67,-385.33 1214.67,-449.33 1278.67,-449.33 1278.67,-385.33 1598.67,-385.33 1598.67,-449.333 1790.67,-449.333 1790.67,-321.333 1022.67,-321.333 1022.67,446.667 1022.67,459.667 1022.67,509.667 894.667,510.667 894.667,126.667 894.667,124"/>
+  <object id="171" class="Wall" x="256" y="256">
+   <polyline points="0,0 -192,256"/>
   </object>
-  <object id="116" class="Wall" x="1582.67" y="1665.33">
-   <polyline points="0,0 2.66667,278.667 18.6667,278.667 20,-66.6667 273.333,-65.3333 273.333,-129.333 -366.667,-129.333 -366.667,-65.3333 -46.6667,-65.3333 -70.6667,-54.6667 -80,-36 -73.3333,-20 -64,-20 -50.6667,-14.6667 -45.3333,-4 17.3333,-1.33333"/>
+  <object id="172" class="Wall" x="832" y="1024">
+   <polyline points="0,0 -320,384"/>
   </object>
-  <object id="117" class="Wall" x="1730.67" y="637.333">
-   <polyline points="0,0 573.333,2.66667 573.333,962.667 637.333,962.667 637.333,2.66667 1149.33,2.66667 2173.33,2.66667 2489.33,2.667 2493.33,194.667 2454,248.667 2455.14,453.312 2491.5,518.537 2493.33,1090.67"/>
-  </object>
-  <object id="121" class="Wall" x="2304" y="2112">
-   <polyline points="0,0 0,-64 8,-64 8.25,-79.0833 13.431,-80.0212 16.3333,-91.0833 30.3333,-95.8333 45.1667,-90.8333 49.4167,-78.6667 54.1667,-78.5 54.0119,-63.5799 64,-64 64,-192 768,-194 768,-958 769,-1031 766,-710"/>
-  </object>
-  <object id="122" class="Wall" x="3008" y="1088">
-   <polyline points="0,0 2.66667,5.33333"/>
-  </object>
-  <object id="126" class="Wall" x="1728" y="640">
-   <polyline points="0,0 0,384 -18.6667,384 -18.6667,128 -78.6667,128 -80,49.3333 -97.3333,32 -90.6667,17.3333 -77.3333,8 -74.6667,1.33333"/>
-  </object>
-  <object id="127" class="Wall" x="1280" y="640">
-   <polyline points="0,0 0,-448"/>
-  </object>
-  <object id="129" class="Wall" x="256" y="192">
-   <polyline points="0,0 0,64 256,64 256,0"/>
-  </object>
-  <object id="130" class="Wall" x="2560" y="1408">
-   <polyline points="0,0 256,0 256,256 0,256 0,0"/>
-  </object>
-  <object id="137" class="Wall" x="1279.33" y="643.333">
-   <polyline points="0,0 0.666667,60.6667 64.6667,60.6667 64.6667,-3.33333"/>
-  </object>
-  <object id="139" class="Wall" x="1265.33" y="638">
-   <polyline points="12.6667,1.33333 0,0 -3.33333,-448.667"/>
-  </object>
-  <object id="145" class="Wall" x="3776" y="1984">
-   <polyline points="0,0 448,0 446.626,-652.489 429.445,-653.997 416.301,-674.996 433.5,-698.5 447.528,-698.499 448,-1152"/>
-  </object>
-  <object id="147" class="Wall" x="2304" y="1600">
-   <polyline points="0,0 0,-960"/>
-  </object>
-  <object id="150" class="Wall" x="1792" y="1920">
-   <polyline points="0,0 0,64 64,64 64,0 0,0"/>
-  </object>
-  <object id="159" class="Wall" x="3904" y="1091">
-   <polyline points="0,0 0,381 64,381 64,61 320,61"/>
-  </object>
-  <object id="164" class="SpawnPoint" x="384" y="896" width="64" height="64"/>
  </objectgroup>
 </map>

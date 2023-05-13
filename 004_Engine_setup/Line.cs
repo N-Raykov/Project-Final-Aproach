@@ -29,7 +29,7 @@ public class Line:EasyDraw
     protected ColliderManager engine;
     protected List<Physics.Collider> colliders = new List<Physics.Collider> { };
 
-    public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false,bool pIsTrigger=false):base(1,1)//its 1500 1500 just to make sure it works for the rotating lines
+    public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false,bool pIsTrigger=false):base(1000,1000)//its 1500 1500 just to make sure it works for the rotating lines
     {
         isTrigger = pIsTrigger;
         isRotating= pIsRotating;

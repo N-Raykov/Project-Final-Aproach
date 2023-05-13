@@ -28,7 +28,11 @@ class SpawnPoint : AnimationSprite
         if (created == false)
         {
             parent.AddChild(player);
-            player.AddChild(((MyGame)game).camera);
+
+            parent.AddChild(((MyGame)game).camera);
+            ((MyGame)game).camera.x = 600;
+            ((MyGame)game).camera.y = 800;
+            ((MyGame)game).camera.scale = 2;
             created = true;
         }
     }

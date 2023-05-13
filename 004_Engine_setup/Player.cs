@@ -23,7 +23,7 @@ class Player : CircleObjectBase {
     const int ROLLING = 4;
     const int FLYING = 5;
     bool hadPortalCollisionThisFrame = false;
-
+    bool capSpeed = true;
 
     bool grounded = false;
 
@@ -81,7 +81,7 @@ class Player : CircleObjectBase {
                     //Console.WriteLine(velocity.Length());
 
                     velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
-
+                    state = FLYING;
                     //accelerationMultiplier = 0.75f;
                     //Console.WriteLine(velocity.Length());
                 }
@@ -225,14 +225,14 @@ class Player : CircleObjectBase {
         Move();
         Shoot();
 
-        //Console.WriteLine(myCollider.position);
+        //Console.WriteLine(velocity.Length());
     }
 
     void HandleInput()
     {
 
         Vec2 moveDirection = new Vec2(0, 0);
-        if (state != ROLLING) {
+        if (state != ROLLING||state==ROLLING) {
 
             if (Input.GetKey(Key.LEFT))
             {
@@ -262,6 +262,13 @@ class Player : CircleObjectBase {
                 if (velocity.y > 0)
                 {
                     state = FALL;
+                    capSpeed = true;
+                }
+
+                if (velocity.y < 0)
+                {
+                    state = JUMP;
+                    capSpeed =false;
                 }
 
                 if (moveDirection.x == 0 && velocity.y == 0)
@@ -273,16 +280,23 @@ class Player : CircleObjectBase {
                 CapSpeed();
                 if (velocity.y > 0){
                     state = FALL;
+                    capSpeed = true;
                 }
                 break;
             case FALL:
-                CapSpeed();
+                if (capSpeed)
+                    CapSpeed();
                 break;
             case ROLLING:
-                if (velocity.y < 0) {
+                if (velocity.y < 0)
+                {
                     CapSpeed();
+                    capSpeed = true;
                 }
-                    
+
+                break;
+            case FLYING:
+
                 break;
         
         }
@@ -294,9 +308,7 @@ class Player : CircleObjectBase {
             velocity = velocity.Normalized() * maxSpeed;
         }
 
-        //Console.WriteLine(state);
 
-        //Console.WriteLine(velocity+" "+state);
 
 
 

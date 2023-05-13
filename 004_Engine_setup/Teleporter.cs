@@ -11,7 +11,9 @@ public class Teleporter:Line{
 
     public readonly int portalNumber;
     public readonly Vec2 normal;
+    public float offset;
     float portalHalfLength = 50;
+    public Sprite sprite;
 
     public Teleporter(Vec2 pPosition,int pPortalNumber,Vec2 pNormal) : base(pPosition-new Vec2(50,0), pPosition + new Vec2(50, 0)) { 
         portalNumber= pPortalNumber;
@@ -25,14 +27,23 @@ public class Teleporter:Line{
             r = 30;
             g = 144;
             b = 255;
+            sprite = new Sprite("portal1.png", false);
         }
         if (portalNumber == 1) {
             Draw(255, 127, 80);
             r = 255;
             g = 127;
             b = 80;
+            sprite = new Sprite("portal2.png", false);
         }
 
+        AddChild(sprite);
+        sprite.SetOrigin(sprite.width/2,sprite.height/2);
+
+    }
+
+    void Update() {
+        sprite.SetXY(rotationOrigin.x,rotationOrigin.y);
     }
 
 }

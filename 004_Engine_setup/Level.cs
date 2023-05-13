@@ -17,7 +17,7 @@ class Level : GameObject
         currentLevelName = filename;
 
         loader = new TiledLoader(filename);
-        loader.rootObject = myGame ;
+        //loader.rootObject = myGame ;
         CreateLevel();
     }
 
@@ -30,5 +30,7 @@ class Level : GameObject
         loader.LoadTileLayers();
         loader.autoInstance = true;
         loader.LoadObjectGroups();
+
+        AddChild(new LaserShooter(new Vec2(1642, 665), 1));
     }
 }

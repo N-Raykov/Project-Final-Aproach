@@ -40,11 +40,6 @@ class Projectile : CircleObjectBase {
         engine.RemoveTriggerCollider(myCollider);
 	}
 
-    ~Projectile()
-    {
-        //Console.WriteLine("GC destroys projectile");
-    }
-
 	protected override void Move() {
         //sprite.rotation = (velocity.GetAngleDegrees());
         CollisionInfo colInfo = engine.MoveUntilCollision(myCollider, velocity*speed);
@@ -58,12 +53,10 @@ class Projectile : CircleObjectBase {
 	void ResolveCollisions(CollisionInfo pCol) {
         if (pCol != null)
         {
-            //Console.WriteLine(owner);
             if (pCol.other is LineSegment) {
                 if (pCol.other.owner is Line) {
                     
                     Line line = (Line)pCol.other.owner;
-                    Console.WriteLine(line.Owner);
                     if (line.Owner is LaserShooter&&portalNumber!=-1) {
                         this.LateDestroy();
                         return;
@@ -85,24 +78,24 @@ class Projectile : CircleObjectBase {
                         float rotation = line.start.GetAngleDegreesTwoPoints(line.end);
                         myGame.teleportManager.portals[portalNumber] = new Teleporter(myCollider.position - pCol.normal * radius / 2, portalNumber, pCol.normal);
                         myGame.teleportManager.portals[portalNumber].Rotate(rotation);
-                        if (portalNumber==0)
-                            myGame.teleportManager.portal1HasChanged= true;
+                        myGame.teleportManager.portals[portalNumber].sprite.rotation = rotation;
+
+                        myGame.teleportManager.portalsChanged[portalNumber] = true;
 
                         parent.AddChild(myGame.teleportManager.portals[portalNumber]);
                         this.LateDestroy();
                     }
                     else {
-
+                        
                         if (owner is LaserShooter) {
                             LaserShooter ls = (LaserShooter)owner;
-
+                            ls.SetPortalNumber(-1);
                             if (!ls.laser1WasDrawn)
                             {
                                 ls.DrawLaser1(myCollider.position);
 
                             }
 
-                            //Console.WriteLine(ls.laser2StartPos+" "+ls.previousLaser2StartPos);
 
                             if (ls.laser1WasDrawn) {
                                 if (ls.previousLaser2StartPos.x != ls.laser2StartPos.x || ls.previousLaser2StartPos.y != ls.laser2StartPos.y) { 
@@ -127,18 +120,21 @@ class Projectile : CircleObjectBase {
                         Teleporter teleporter = (Teleporter)pCol.other.owner;
                         LaserShooter ls = (LaserShooter)owner;
 
+                        
+
                         if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown)) {
+
+                            ls.SetPortalNumber(teleporter.portalNumber);
                             myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].rotationOrigin + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
                             lastTeleport = Time.time;
                             velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
                             hasTeleported= true;
-                            //Console.WriteLine(ls.laser2StartPos + " " + ls.previousLaser2StartPos);
                             ls.previousLaser2StartPos=ls.laser2StartPos;
                             ls.laser2StartPos= myCollider.position;
-                            //Console.WriteLine(ls.laser2StartPos + " " + ls.previousLaser2StartPos);
                             return;
 
                         } else {
+                            
                             this.LateDestroy();
                         }
 
@@ -154,7 +150,7 @@ class Projectile : CircleObjectBase {
             }
  
 
-            if (pCol.other.owner is CircleMapObject)// || pCol.other.owner is Line
+            if (pCol.other.owner is CircleMapObject)
             {
                 velocity.Reflect(bounciness, pCol.normal);
                 bounces++;
