@@ -62,5 +62,6 @@ public class MyGame : Game
     void Update() {
         teleportManager.Update();
         cameraManager.Update();
+        //Console.WriteLine(cameraManager.camera.x + " " + cameraManager.camera.y);
     }
 }

@@ -35,7 +35,6 @@ class CameraTrigger : AnimationSprite
     void Initialize(TiledObject obj, string nodes)
     {
         alpha = 0.0f;
-
         target = obj.GetIntProperty("nextLocation", 0);
 
         //Define the relative positions of the nodes and put them in a list

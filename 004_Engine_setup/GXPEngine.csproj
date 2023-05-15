@@ -47,6 +47,7 @@
     <Compile Include="CameraLocation.cs" />
     <Compile Include="CameraManager.cs" />
     <Compile Include="CameraTrigger.cs" />
+    <Compile Include="Checkpoint.cs" />
     <Compile Include="CircleObjectBase.cs" />
     <Compile Include="CircleMapObject.cs" />
     <Compile Include="Collectable.cs" />
