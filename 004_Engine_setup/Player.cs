@@ -263,7 +263,7 @@ class Player : CircleObjectBase {
 	protected override void Update() {
         SetColor(state % 2, (state / 2)%2, (state + 1) % 2);
         alpha = grounded ? 1 : 0.4f;
-
+        Console.WriteLine(velocity.Length()+" "+state);
 
         hadPortalCollisionThisFrame= false;
         HandleInput();
