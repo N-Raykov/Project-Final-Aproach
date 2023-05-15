@@ -26,6 +26,8 @@ class Player : CircleObjectBase
     const int FLYING = 5;
     bool capSpeed = true;
 
+    Vec2 lastCheckPoint = new Vec2(0, 0);
+
     bool grounded = false;
     AnimationSprite sprite = new AnimationSprite("Robot_Frames.png", 32,5,158);
 
@@ -41,8 +43,8 @@ class Player : CircleObjectBase
         friction = 0.5f;
         Draw(255, 255, 255);
         
-        sprite.SetOrigin(sprite.width / 2, sprite.height / 4*3);
-        sprite.SetScaleXY(0.8f, 0.8f);
+        sprite.SetOrigin(sprite.width / 2, sprite.height/2+sprite.height/6);
+        sprite.SetScaleXY(0.8f, 0.6f);
         AddChild(sprite);
     }
 
@@ -97,6 +99,13 @@ class Player : CircleObjectBase
                 Collectable collectable = (Collectable)pTrig.owner.parent;
                 collectable.PickUp();
                 new Sound("Collectible_Pickup.wav").Play();
+            }
+
+            if (pTrig.owner.parent is Checkpoint)
+            {
+                Checkpoint checkpoint = (Checkpoint)pTrig.owner.parent;
+                lastCheckPoint.SetXY(checkpoint.x, checkpoint.y);
+                Console.WriteLine("rhanks?");
             }
         }
 
@@ -284,6 +293,10 @@ class Player : CircleObjectBase
 
     protected override void Update()
     {
+        if (lastCheckPoint.x == 0 && lastCheckPoint.y == 0) {
+            lastCheckPoint = position;
+        }
+
         SetColor(state % 2, (state / 2) % 2, (state + 1) % 2);
         alpha = grounded ? 1 : 0.4f;
 
@@ -296,12 +309,20 @@ class Player : CircleObjectBase
         Shoot();
 
         State();
+        //Console.WriteLine(y);
     }
 
     void HandleInput()
     {
 
-        Vec2 moveDirection = new Vec2(0, 0);
+        if (Input.GetKey(Key.F)||y>2000) {
+            velocity.SetXY(0,0);
+            myCollider.position = lastCheckPoint;
+            state = MOVE;
+            UpdateScreenPosition();
+        }
+
+            Vec2 moveDirection = new Vec2(0, 0);
         if (state != ROLLING || state == ROLLING)
         {
 

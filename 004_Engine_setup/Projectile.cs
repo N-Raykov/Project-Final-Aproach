@@ -105,6 +105,8 @@ class Projectile : CircleObjectBase {
 
                         myGame.teleportManager.portalsChanged[portalNumber] = true;
 
+                        myGame.teleportManager.shots = 100;
+
                         parent.AddChild(myGame.teleportManager.portals[portalNumber]);
                         this.LateDestroy();
                     }
@@ -121,7 +123,8 @@ class Projectile : CircleObjectBase {
 
 
                             if (ls.laser1WasDrawn) {
-                                if (ls.previousLaser2StartPos.x != ls.laser2StartPos.x || ls.previousLaser2StartPos.y != ls.laser2StartPos.y) { 
+                                if (ls.previousLaser2StartPos.x != ls.laser2StartPos.x || ls.previousLaser2StartPos.y != ls.laser2StartPos.y) {
+                                    //Console.WriteLine(1);
                                     ls.laser2WasDrawn = false;
                                 }
                             }

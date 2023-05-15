@@ -26,10 +26,13 @@ public class CameraManager
 
     public void MoveCamera(Collider trigger, int target)
     {
+        Console.WriteLine(1);
+
         if (!isMoving) {
 
             if (target == 0)
             {
+                Console.WriteLine(1);
                 camera.x = cameraLocations[target].x;
                 camera.y = cameraLocations[target].y;
                 camera.scale = cameraScales[target];
@@ -37,11 +40,6 @@ public class CameraManager
             }
             else
             {
-                Console.WriteLine(camera.x+" "+camera.y+" "+camera.scale+" " + cameraLocations[target]+" " + cameraScales[target]);
-                if (Mathf.Abs(camera.x - cameraLocations[target].x)<1 && Mathf.Abs(camera.y - cameraLocations[target].y)<1 && Mathf.Abs(camera.scale - cameraScales[target])<0.01f) {
-                    target--;
-                }
-
 
                 startTime = Time.time;
                 isMoving = true;
@@ -60,8 +58,13 @@ public class CameraManager
     }
 
     public void Update() {
+        //Console.WriteLine(isMoving);
+
         if (Time.time - startTime > duration) {
             isMoving = false;
         }
+
+        //camera.x = 2150;
+        //camera.y = 1152;
     }
 }

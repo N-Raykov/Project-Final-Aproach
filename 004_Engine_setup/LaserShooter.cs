@@ -112,25 +112,26 @@ public class LaserShooter:AnimationSprite{
     }
 
     public void DestroyLaser2() {
-
-       
-        if (portalNumber == -1) {
-
-            
-
-            if (laser2Col1 != null)
-                laser2Col1.Destroy();
-            if (laser2Col2 != null)
-                laser2Col2.Destroy();
-            laser2WasDrawn = false;
-            laser2.alpha = 0;
-            laser2.SetScaleXY(1, 1);
+        if (portalNumber == -1)
             return;
-        }
+       
+        //if (portalNumber == -1) {
+
+        //    Console.WriteLine(1);
+
+        //    if (laser2Col1 != null)
+        //        laser2Col1.Destroy();
+        //    if (laser2Col2 != null)
+        //        laser2Col2.Destroy();
+        //    laser2WasDrawn = false;
+        //    laser2.alpha = 0;
+        //    laser2.SetScaleXY(1, 1);
+        //    return;
+        //}
 
         if (myGame.teleportManager.portalsChanged[Mathf.Abs(portalNumber - 1)]) {
 
-
+            Console.WriteLine(2);
             if (laser2Col1 != null)
                 laser2Col1.Destroy();
             if (laser2Col2 != null)
@@ -147,7 +148,8 @@ public class LaserShooter:AnimationSprite{
         Reset();
         SetPosition();
         AddLasers();
-        Shoot(side);
+        if (myGame.teleportManager.shots>0)
+            Shoot(side);
         DestroyLaser2();
     }
 

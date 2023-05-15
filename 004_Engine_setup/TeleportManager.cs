@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,10 +14,16 @@ public class TeleportManager:GameObject{
 
     public Teleporter[] portals = { null, null };
 
+    public int shots = 2;
+
     public TeleportManager() { 
     }
 
     public void Update() {
+        if (shots > 0)
+            shots--;
+
+
         if (Input.GetKeyUp(Key.R)) {
             
             if (portals[0] != null) {
