@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="55" tilewidth="64" tileheight="64" infinite="0" nextlayerid="31" nextobjectid="181">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="55" tilewidth="64" tileheight="64" infinite="0" nextlayerid="31" nextobjectid="185">
  <tileset firstgid="1" name="1" tilewidth="64" tileheight="64" tilecount="256" columns="16">
   <image source="Platforms_Tile_Set_11_05_23.png" width="1024" height="1024"/>
  </tileset>
@@ -76,7 +76,7 @@
 </data>
  </layer>
  <objectgroup id="29" name="Object Layer 2">
-  <object id="165" class="SpawnPoint" x="342" y="690" width="180" height="228"/>
+  <object id="165" class="SpawnPoint" x="394" y="782" width="44" height="43"/>
   <object id="169" class="Wall" x="64" y="192">
    <polyline points="1216,512 1216,0 448,0 448,64 192,64 192,0 0,0 0,512 64,512 64,768 0,768 0,1280 192,1280 192,1216 448,1216 448,1280 768,1280 768,832 832,832"/>
   </object>
@@ -108,14 +108,33 @@
   </object>
   <object id="179" class="CameraTrigger" x="1282" y="742">
    <properties>
-    <property name="nextLocation" type="int" value="0"/>
+    <property name="nextLocation" type="int" value="1"/>
    </properties>
    <polyline points="0,0 -6,234 18,254 22,166 8,22 80,18 66,176 100,242 130,76 76,52 0,186 -116,150 -70,6 56,62 90,190 178,62 98,38 -84,216 -134,110 -18,56 66,172 168,184 134,44 -34,208 114,40 -98,-2 88,-4"/>
   </object>
   <object id="180" class="CameraLocation" x="1982" y="798" width="60" height="54">
    <properties>
-    <property name="index" type="int" value="0"/>
+    <property name="index" type="int" value="1"/>
+    <property name="scale" type="float" value="1"/>
    </properties>
+  </object>
+  <object id="182" class="CameraLocation" x="395" y="782.5" width="44" height="43">
+   <properties>
+    <property name="index" type="int" value="0"/>
+    <property name="scale" type="float" value="2"/>
+   </properties>
+  </object>
+  <object id="183" class="CameraTrigger" x="1207" y="1404">
+   <properties>
+    <property name="nextLocation" type="int" value="1"/>
+   </properties>
+   <polyline points="0,0 -6,234 18,254 22,166 8,22 80,18 66,176 100,242 130,76 76,52 0,186 -116,150 -70,6 56,62 90,190 178,62 98,38 -84,216 -134,110 -18,56 66,172 168,184 134,44 -34,208 114,40 -98,-2 88,-4"/>
+  </object>
+  <object id="184" class="CameraTrigger" x="328" y="706">
+   <properties>
+    <property name="nextLocation" type="int" value="0"/>
+   </properties>
+   <polyline points="0,0 177,184 195,-23 45,131 5,139 2,27 60,102 95,124 111,87 90,-4 24,193 133,54 101,185"/>
   </object>
  </objectgroup>
 </map>

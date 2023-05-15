@@ -109,6 +109,7 @@
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="Teleporter.cs" />
     <Compile Include="TeleportManager.cs" />
+    <Compile Include="Tween.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
