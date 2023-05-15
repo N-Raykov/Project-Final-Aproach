@@ -51,4 +51,9 @@ class Level : GameObject
         }
 
     }
+
+    void Update()
+    {
+        //Console.WriteLine(GetChildCount());
+    }
 }

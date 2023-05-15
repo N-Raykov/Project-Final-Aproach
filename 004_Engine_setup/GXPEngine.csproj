@@ -91,6 +91,7 @@
     <Compile Include="GXPEngine2023b\GXPEngine\Utils\Mathf.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\Utils\Utils.cs" />
+    <Compile Include="LaserProjectile.cs" />
     <Compile Include="LaserShooter.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Line.cs" />

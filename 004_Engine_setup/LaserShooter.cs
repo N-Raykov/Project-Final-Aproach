@@ -11,15 +11,15 @@ using GXPEngine;
 using Physics;
 using TiledMapParser;
 
-public class LaserShooter:AnimationSprite{
+public class LaserShooter : AnimationSprite {
 
     MyGame myGame = (MyGame)Game.main;
-    float radius=20;
-    const int LEFT = 1; 
+    float radius = 20;
+    const int LEFT = 1;
     const int RIGHT = 2;
     int side;
     Vec2 position;
-    public Sprite laser1 = new Sprite("laser.png",false);
+    public Sprite laser1 = new Sprite("laser.png", false);
     public Sprite laser2 = new Sprite("laser.png", false);
     public bool laser1WasDrawn = false;
     public bool laser2WasDrawn = false;
@@ -40,13 +40,13 @@ public class LaserShooter:AnimationSprite{
     //Vec2 pPosition,int pside
     public LaserShooter(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
     {
-        side=obj.GetIntProperty("side");
+        side = obj.GetIntProperty("side");
         laser1.alpha = 0;
         laser2.alpha = 0;
         laser1.SetOrigin(0, laser1.height / 2);
         laser2.SetOrigin(0, laser2.height / 2);
         SetOrigin(radius, radius);
-        
+
     }
 
     void SetPosition() {
@@ -60,16 +60,16 @@ public class LaserShooter:AnimationSprite{
     }
 
     public void DrawLaser1(Vec2 end) {
-        
+        if (laser1WasDrawn) return;
         Vec2 vec = end - position;
-        float length=vec.Length();
+        float length = vec.Length();
         laser1.alpha = 1;
-        laser1.SetScaleXY(length/laser1.width, 1);
-        laser1.SetXY(position.x,position.y);
+        laser1.SetScaleXY(length / laser1.width, 1);
+        laser1.SetXY(position.x, position.y);
 
         Vec2 normal = vec.Normal();
         Vec2 reverseNormal = vec.ReverseNormal();
-        laser1Col1 = new Line(position+normal*lineWidthHalf,end+normal*lineWidthHalf);
+        laser1Col1 = new Line(position + normal * lineWidthHalf, end + normal * lineWidthHalf);
         laser1Col1.SetOwner(this);
         laser1Col2 = new Line(position + reverseNormal * lineWidthHalf, end + reverseNormal * lineWidthHalf);
         laser1Col2.SetOwner(this);
@@ -77,14 +77,14 @@ public class LaserShooter:AnimationSprite{
         parent.AddChild(laser1Col2);
         parent.AddChild(laser1);
         float rotation = position.GetAngleDegreesTwoPoints(end);
-        laser1.rotation= rotation;
+        laser1.rotation = rotation;
 
 
         laser1WasDrawn = true;
     }
 
-    public void DrawLaser2(Vec2 start,Vec2 end) {
-        
+    public void DrawLaser2(Vec2 start, Vec2 end) {
+
         laser2WasDrawn = true;
         Vec2 vec = end - start;
         float length = vec.Length();
@@ -113,10 +113,10 @@ public class LaserShooter:AnimationSprite{
 
     public void DestroyLaser2() {
 
-       
+
         if (portalNumber == -1) {
 
-            
+
 
             if (laser2Col1 != null)
                 laser2Col1.Destroy();
@@ -148,11 +148,48 @@ public class LaserShooter:AnimationSprite{
         SetPosition();
         AddLasers();
         Shoot(side);
+        //AlternateShoot();
         DestroyLaser2();
     }
 
-    void Shoot(int pSide) { 
-    
+    //Canvas probe;
+    //GameObject CastRay(float x, float y)
+    //{
+    //    if (probe == null)
+    //    {
+    //        probe = new Canvas(1, 1);
+    //        probe.graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, 1, 1));
+    //       // game.AddChild(probe);
+    //    }
+
+    //    probe.SetXY(x, y);
+    //    probe.width = 1280;
+    //    probe.height = 4;
+
+    //    GameObject closest = null;
+    //    float currentDistance = float.MaxValue;
+
+    //    foreach (GameObject detected in probe.GetCollisions())
+    //    {
+    //        if (detected is LaserShooter) continue;
+    //        float deltaX = detected.x - this.x;
+    //        float deltaY = detected.y - this.y;
+    //        float distanceSQ = deltaX * deltaX + deltaY * deltaY;
+    //        if (distanceSQ < currentDistance)
+    //        {
+    //            closest = detected;
+    //            currentDistance = distanceSQ;
+    //        }
+    //    }
+    //    if (closest != null)
+    //    {
+    //        return closest;
+    //    }
+    //    return null;
+    //}
+
+    void Shoot(int pSide) {
+
         switch (pSide)
         {
             case 1:
@@ -167,10 +204,11 @@ public class LaserShooter:AnimationSprite{
 
     }
 
+
     void CreateBullet(float pAngle) {
         Vec2 shotDirection = new Vec2(1000f, 0);
         shotDirection.RotateDegrees(pAngle);
-        Projectile bullet = new Projectile(position, shotDirection, 1,-1,this);
+        LaserProjectile bullet = new LaserProjectile(position, shotDirection, 1, -1, this);
         parent.AddChild(bullet);
     }
 

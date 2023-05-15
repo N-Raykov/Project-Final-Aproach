@@ -14,7 +14,7 @@ class Wall : AnimationSprite
     List<Vec2> vectorList = new List<Vec2>();
     List<Line> lineList = new List<Line>();
 
-    public Wall(TiledObject obj = null) : base("tilesheet.png", 1, 1, -1, false, false)
+    public Wall(TiledObject obj = null) : base("tilesheet.png", 1, 1, -1, false, !false)
     {
         if (obj.polyLines != null)
         {

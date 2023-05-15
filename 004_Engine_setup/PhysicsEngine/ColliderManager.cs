@@ -48,6 +48,8 @@ namespace Physics {
 		// Note that MoveUntilCollision checks against all solid colliders, but the given (moving) collider
 		// does not need to be in that list.
 		public CollisionInfo MoveUntilCollision(Collider col, Vec2 velocity) {
+
+			//Console.WriteLine(solidColliders.Count);
 			CollisionInfo firstCollision = null;
 			col.position += velocity;
 			foreach (Collider other in solidColliders) {

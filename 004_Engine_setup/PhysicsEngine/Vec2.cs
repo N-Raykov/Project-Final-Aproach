@@ -4,6 +4,8 @@ using GXPEngine;
 
 public struct Vec2
 {
+    static int count = 0;
+
     public float x;
     public float y;
     public static Random rand = new Random();

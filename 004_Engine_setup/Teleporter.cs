@@ -30,6 +30,7 @@ public class Teleporter:Line{
             g = 144;
             b = 255;
             sprite = new Sprite("portal1.png", false);
+            sprite.name = "test";
         }
         if (portalNumber == 1) {
             Draw(255, 127, 80);
@@ -37,6 +38,7 @@ public class Teleporter:Line{
             g = 127;
             b = 80;
             sprite = new Sprite("portal2.png", false);
+            sprite.name = "test";
         }
 
         AddChild(sprite);

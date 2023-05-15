@@ -4,7 +4,7 @@ using GXPEngine;
 
 public class MyGame : Game
 {
-    string startLevel = "Game_Puzzle_TileSet_neeew.tmx";
+    string startLevel = "Game_Puzzle_TileSet_neeew.tmx";//"Game_Puzzle_TileSet_neeew - Copy.tmx";
     string nextLevel;
 
     public TeleportManager teleportManager;
