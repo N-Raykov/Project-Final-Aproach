@@ -82,6 +82,7 @@ class Player : CircleObjectBase {
             {
                 Collectable collectable = (Collectable)pTrig.owner.parent;
                 collectable.PickUp();
+                new Sound("Collectible_Pickup.wav").Play();
             }
         }
 
@@ -180,7 +181,6 @@ class Player : CircleObjectBase {
                     state = MOVE;
                 }
 
-                new Sound("Collectible_Pickup.wav").Play();
                 velocity.Reflect(bounciness, pCol.normal);
                 return;
             }
