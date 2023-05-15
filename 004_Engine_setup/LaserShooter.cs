@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using GXPEngine;
-using GXPEngine.Core;
 using Physics;
+using TiledMapParser;
 
-public class LaserShooter:EasyDraw{
+public class LaserShooter:AnimationSprite{
 
     MyGame myGame = (MyGame)Game.main;
     float radius=20;
@@ -25,6 +25,7 @@ public class LaserShooter:EasyDraw{
     public bool laser2WasDrawn = false;
     float lineWidthHalf = 3;
     bool addedToGame = false;
+    bool setPosition = false;
 
     int portalNumber = -1;
 
@@ -36,20 +37,26 @@ public class LaserShooter:EasyDraw{
 
     public Vec2 laser2StartPos = new Vec2();
     public Vec2 previousLaser2StartPos = new Vec2();
-
-    public LaserShooter(Vec2 pPosition,int pSide) : base(1, 1, false)
+    //Vec2 pPosition,int pside
+    public LaserShooter(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
     {
-        
+        side=obj.GetIntProperty("side");
         laser1.alpha = 0;
         laser2.alpha = 0;
         laser1.SetOrigin(0, laser1.height / 2);
         laser2.SetOrigin(0, laser2.height / 2);
-        side = pSide;
         SetOrigin(radius, radius);
-        position = pPosition;
-        UpdateScreenPosition();
-        Draw(0, 0, 188);
         
+    }
+
+    void SetPosition() {
+        if (!setPosition) {
+            if (side == RIGHT)
+                position.SetXY(x + width / 2, y);
+            else
+                position.SetXY(x - width / 2, y);
+            setPosition = true;
+        }
     }
 
     public void DrawLaser1(Vec2 end) {
@@ -105,7 +112,12 @@ public class LaserShooter:EasyDraw{
     }
 
     public void DestroyLaser2() {
+
+       
         if (portalNumber == -1) {
+
+            
+
             if (laser2Col1 != null)
                 laser2Col1.Destroy();
             if (laser2Col2 != null)
@@ -117,6 +129,8 @@ public class LaserShooter:EasyDraw{
         }
 
         if (myGame.teleportManager.portalsChanged[Mathf.Abs(portalNumber - 1)]) {
+
+
             if (laser2Col1 != null)
                 laser2Col1.Destroy();
             if (laser2Col2 != null)
@@ -129,21 +143,9 @@ public class LaserShooter:EasyDraw{
 
     }
 
-    protected void UpdateScreenPosition()
-    {
-        x = position.x;
-        y = position.y;
-    }
-
-    protected virtual void Draw(byte red, byte green, byte blue)
-    {
-        Clear(Color.Empty);
-        Fill(red, green, blue);
-        Stroke(red, green, blue);
-        Ellipse(radius, radius, 2 * radius, 2 * radius);
-    }
-
     void Update() {
+        Reset();
+        SetPosition();
         AddLasers();
         Shoot(side);
         DestroyLaser2();
@@ -166,7 +168,6 @@ public class LaserShooter:EasyDraw{
     }
 
     void CreateBullet(float pAngle) {
-        var result = ((MyGame)game).camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
         Vec2 shotDirection = new Vec2(1000f, 0);
         shotDirection.RotateDegrees(pAngle);
         Projectile bullet = new Projectile(position, shotDirection, 1,-1,this);
@@ -183,6 +184,17 @@ public class LaserShooter:EasyDraw{
 
     public void SetPortalNumber(int pPortalNumber) {
         portalNumber = pPortalNumber;
+    }
+
+    void Reset() {
+
+        if (Input.GetKeyUp(Key.R)){
+            DestroyLaser2();    
+            laser2StartPos = new Vec2();
+            previousLaser2StartPos = new Vec2();
+            laser2WasDrawn= false;
+        }
+
     }
 
 }

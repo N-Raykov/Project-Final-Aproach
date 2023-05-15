@@ -26,10 +26,18 @@ class Projectile : CircleObjectBase {
         _radius=pRadius;
 		velocity=pVelocity;
         bounciness = 1f;
-        Draw(255, 255, 255);
         portalNumber = pPortalNumber;
+        Draw(255, 255, 255);
+        
         
 	}
+
+    protected override void Draw(byte red, byte green, byte blue)
+    {
+        if (portalNumber!=-1)
+            base.Draw(red, green, blue);
+    }
+
     protected override void AddCollider()
     {
         engine.AddTriggerCollider(myCollider);//might need to change back to solid
@@ -61,9 +69,24 @@ class Projectile : CircleObjectBase {
                         this.LateDestroy();
                         return;
                     }
-                        
+
+                    if (line.Owner is Button){
+                        if (portalNumber != -1)
+                        {
+                            this.LateDestroy();
+                            return;
+                        }
+                        else {
+                            
+                            Button button = (Button)line.Owner;
+                            button.StartMovingDoor();
+                        }
+
+                    }
+
 
                 }
+
 
 
                 if (!(pCol.other.owner is Teleporter)) {
@@ -104,6 +127,7 @@ class Projectile : CircleObjectBase {
                             }
 
                             if (ls.laser1WasDrawn && !ls.laser2WasDrawn&&hasTeleported) {
+                                Console.WriteLine(ls.previousLaser2StartPos+ " "+ls.laser2StartPos);
                                 ls.DrawLaser2(ls.laser2StartPos, myCollider.position);
                             }
 
@@ -137,6 +161,9 @@ class Projectile : CircleObjectBase {
                             
                             this.LateDestroy();
                         }
+
+                        
+
 
                     }
 

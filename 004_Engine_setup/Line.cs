@@ -29,7 +29,7 @@ public class Line:EasyDraw
     protected ColliderManager engine;
     protected List<Physics.Collider> colliders = new List<Physics.Collider> { };
 
-    public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false,bool pIsTrigger=false):base(1000,1000)//its 1500 1500 just to make sure it works for the rotating lines
+    public Line(Vec2 pStart, Vec2 pEnd,bool pIsRotating=false,bool pIsTrigger=false):base(2,2)//its 1500 1500 just to make sure it works for the rotating lines
     {
         isTrigger = pIsTrigger;
         isRotating= pIsRotating;
@@ -42,8 +42,18 @@ public class Line:EasyDraw
         colliders.Add(new Physics.Circle(this, start,0));
         colliders.Add(new Physics.Circle(this, end, 0));
         engine = ColliderManager.main;
-        foreach(Physics.Collider col in colliders)
-            engine.AddSolidCollider(col);
+
+        if (isTrigger == false)
+        {
+            foreach (Physics.Collider col in colliders)
+                engine.AddSolidCollider(col);
+        }
+        else
+        {
+            foreach (Physics.Collider col in colliders)
+                engine.AddTriggerCollider(col);
+        }
+
     }
 
     // This is a destructor - call by garbage collector
@@ -90,6 +100,25 @@ public class Line:EasyDraw
     }
     public void SetOwner(GameObject pGameObject) { 
         Owner= pGameObject;
+    }
+
+    public void MoveColliders(Vec2 pVec) {
+        start += pVec;
+        end += pVec;
+        foreach (Physics.Collider col in colliders)
+        {
+            if (col is Circle)
+            {
+                col.position += pVec;
+            }
+            else
+            {
+                LineSegment  line = (LineSegment)col;
+                line.start += pVec;
+                line.end+= pVec;
+            }
+        }
+        Draw(r, g, b);
     }
 
 }

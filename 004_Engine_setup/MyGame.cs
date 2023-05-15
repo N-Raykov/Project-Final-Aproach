@@ -7,41 +7,23 @@ public class MyGame : Game
     string startLevel = "Game_Puzzle_TileSet_neeew.tmx";
     string nextLevel;
 
-	public Camera camera;
     public TeleportManager teleportManager;
+    public CameraManager cameraManager;
 
 	public MyGame() : base(1200, 800, false,false)
 	{
         RenderMain = false;
 
         teleportManager = new TeleportManager();
+        AddChild(teleportManager);
+        
 
-        camera = new Camera(0, 0, 1200, 800);
+        cameraManager= new CameraManager();
 
         LoadLevel(startLevel);
         
         OnAfterStep += CheckLoadLevel;
 
-        //RenderMain = false;
-        //player = new Player(new Vec2(340, 800), 30);
-        //camera = new Camera(0, 0, 1200, 800);
-        //AddChild(player);
-        //player.AddChild(camera);
-
-
-        //teleportManager = new TeleportManager();
-        //AddChild(player);
-        //AddChild(new Line(new Vec2(0, 500), new Vec2(500, 1000)));
-        //AddChild(new Line(new Vec2(500, 1000), new Vec2(1500, 1000)));
-        //AddChild(new Line(new Vec2(1500, 1000), new Vec2(2000, 1300)));
-        //AddChild(new Line(new Vec2(2000, 1600), new Vec2(2500, 1600)));
-
-
-        //AddChild(new Line(new Vec2(500, 600), new Vec2(1500, 600)));
-        //AddChild(new Line(new Vec2(1500, 600), new Vec2(1500, 800)));
-        //AddChild(new LaserShooter(new Vec2(750, 750)));
-
-        //AddChild(new CircleMapObject(30, new Vec2(250, 250)));
     }
 
     void DestroyAll()
@@ -76,4 +58,8 @@ public class MyGame : Game
 
         new MyGame().Start();
 	}
+
+    void Update() {
+        teleportManager.Update();
+    }
 }

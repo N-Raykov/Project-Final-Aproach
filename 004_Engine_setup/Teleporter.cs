@@ -46,4 +46,10 @@ public class Teleporter:Line{
         sprite.SetXY(rotationOrigin.x,rotationOrigin.y);
     }
 
+    protected override void OnDestroy()
+    {
+        
+        base.OnDestroy();
+    }
+
 }

@@ -9,7 +9,7 @@ class SpawnPoint : AnimationSprite
 {
     Player player;
     bool created = false;
-    int playerSize = 30;
+    int playerSize = 48;
 
     public SpawnPoint(TiledObject obj = null) : base("tilesheet.png", 1, 1, -1, false, false)
     {
@@ -28,12 +28,14 @@ class SpawnPoint : AnimationSprite
         if (created == false)
         {
             parent.AddChild(player);
-
-            parent.AddChild(((MyGame)game).camera);
-            ((MyGame)game).camera.x = 600;
-            ((MyGame)game).camera.y = 800;
-            ((MyGame)game).camera.scale = 2;
+            parent.AddChild(((MyGame)game).cameraManager.camera);
+            //player.AddChild(((MyGame)game).camera);
+            //parent.AddChild(((MyGame)game).camera);
+            //((MyGame)game).camera.x = 600;
+            //((MyGame)game).camera.y = 800;
+            //((MyGame)game).camera.scale = 2;
             created = true;
         }
     }
-}
+
+}   

@@ -7,15 +7,34 @@ using System.Threading.Tasks;
 using GXPEngine;
 using Physics;
 
-public class TeleportManager{
+public class TeleportManager:GameObject{
 
-    //public bool portal1HasChanged=false;
-    //public bool portal2HasChanged = false;
     public bool[] portalsChanged = {false,false };
 
     public Teleporter[] portals = { null, null };
 
     public TeleportManager() { 
     }
+
+    public void Update() {
+        if (Input.GetKeyUp(Key.R)) {
+            
+            if (portals[0] != null) {
+                portals[0].sprite.Destroy();
+                portals[0].Destroy();
+                portals[0] = null;
+                portalsChanged[0] = false;
+            }
+            if (portals[1] != null){
+                portals[1].sprite.Destroy();
+                portals[1].Destroy();
+                portals[1] = null;
+                portalsChanged[1] = false;
+            }
+
+        }
+    
+    }
+
 
 }

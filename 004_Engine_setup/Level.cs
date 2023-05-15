@@ -31,6 +31,14 @@ class Level : GameObject
         loader.autoInstance = true;
         loader.LoadObjectGroups();
 
-        AddChild(new LaserShooter(new Vec2(1642, 665), 1));
+        Button[] b = FindObjectsOfType<Button>();
+        Door[] d = FindObjectsOfType<Door>();
+        foreach (Button button in b) {
+            foreach (Door door in d) { 
+                if (button.id==door.id)
+                    button.SetDoor(door);
+            }
+        }
+
     }
 }

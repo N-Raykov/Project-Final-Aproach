@@ -39,10 +39,11 @@ public class CircleObjectBase : EasyDraw
         }
     }
     protected float _density = 1;
+    bool isTrigger;
 
-    public CircleObjectBase(int pRadius, Vec2 pPosition, Vec2 pVelocity = new Vec2(), bool moving = true) : base(pRadius * 2 + 1, pRadius * 2 + 1)//pRadius * 2 + 1, pRadius * 2 + 1
+    public CircleObjectBase(int pRadius, Vec2 pPosition, Vec2 pVelocity = new Vec2(), bool moving = true, bool pIsTrigger = false) : base(pRadius * 2 + 1, pRadius * 2 + 1)//pRadius * 2 + 1, pRadius * 2 + 1
     {
-
+        isTrigger = pIsTrigger;
         isMoving= moving;
         radius = pRadius;
         position = pPosition;
@@ -55,7 +56,14 @@ public class CircleObjectBase : EasyDraw
     }
 
     protected virtual void AddCollider() {
-        engine.AddSolidCollider(myCollider);
+        if (isTrigger == false)
+        {
+            engine.AddSolidCollider(myCollider);
+        }
+        else
+        {
+            engine.AddTriggerCollider(myCollider);
+        }
 
     }
 

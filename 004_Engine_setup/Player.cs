@@ -64,6 +64,25 @@ class Player : CircleObjectBase {
         }
 
         List<Collider> overlaps = engine.GetOverlapsSolids(myCollider);
+        List<Collider> triggerOverlaps = engine.GetOverlaps(myCollider);
+
+        foreach (Collider pTrig in triggerOverlaps)
+        {
+            if (pTrig.owner.parent is CameraTrigger)
+            {
+                CameraTrigger trigger = (CameraTrigger)pTrig.owner.parent;
+                int target = trigger.GiveTarget();
+                ((MyGame)game).cameraManager.MoveCamera(pTrig, target);
+            }
+
+
+
+            if (pTrig.owner.parent is Collectable)
+            {
+                Collectable collectable = (Collectable)pTrig.owner.parent;
+                collectable.PickUp();
+            }
+        }
 
         foreach (Collider pCol in overlaps)
         {
@@ -194,7 +213,7 @@ class Player : CircleObjectBase {
 
         if (Input.GetMouseButton(0) && (Time.time - lastShotTime >= cooldown))
         {
-            var result = ((MyGame)game).camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
+            var result = ((MyGame)game).cameraManager.camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
             Vec2 shotDirection = (new Vec2(result.x, result.y) - position).Normalized();
             Projectile bullet = new Projectile(position, shotDirection, Projectile._radius,0);
             parent.AddChild(bullet);
@@ -204,7 +223,7 @@ class Player : CircleObjectBase {
 
         if (Input.GetMouseButton(1) && (Time.time - lastShotTime >= cooldown))
         {
-            var result = ((MyGame)game).camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
+            var result = ((MyGame)game).cameraManager.camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
             Vec2 shotDirection = (new Vec2(result.x, result.y) - position).Normalized();
             Projectile bullet = new Projectile(position, shotDirection, Projectile._radius, 1);
             parent.AddChild(bullet);
