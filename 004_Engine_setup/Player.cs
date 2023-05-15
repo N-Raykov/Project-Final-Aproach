@@ -7,14 +7,15 @@ using System.Threading;
 using GXPEngine;
 using Physics;
 
-class Player : CircleObjectBase {
+class Player : CircleObjectBase
+{
 
     Random rnd = new Random();
 
     float speedEachFrame = 2.5f;//6f
     float maxSpeedHorizontal = 7f;
-	int cooldown=400;
-	int lastShotTime = -10000;
+    int cooldown = 400;
+    int lastShotTime = -10000;
     int hp = 100;
     public static readonly string tag = "player";
     int state = MOVE;
@@ -23,15 +24,26 @@ class Player : CircleObjectBase {
     const int FALL = 3;
     const int ROLLING = 4;
     const int FLYING = 5;
-    bool hadPortalCollisionThisFrame = false;
     bool capSpeed = true;
 
     bool grounded = false;
+    AnimationSprite sprite = new AnimationSprite("Robot_Frames.png", 32,5,158);
 
-    public Player(Vec2 startPosition,int pRadius) : base(pRadius,startPosition) {
+
+    int lastInputTime = -10000;
+    int idleDelay = 1000;
+    int lastInput = 0;
+
+
+    public Player(Vec2 startPosition, int pRadius) : base(pRadius, startPosition)
+    {
         bounciness = 0f;
         friction = 0.5f;
         Draw(255, 255, 255);
+        
+        sprite.SetOrigin(sprite.width / 2, sprite.height / 4*3);
+        sprite.SetScaleXY(0.8f, 0.8f);
+        AddChild(sprite);
     }
 
 
@@ -39,11 +51,13 @@ class Player : CircleObjectBase {
     {
         engine.AddSolidCollider(myCollider);//was trigger
     }
-    protected override void OnDestroy() {
-		engine.RemoveSolidCollider(myCollider);
-	}
+    protected override void OnDestroy()
+    {
+        engine.RemoveSolidCollider(myCollider);
+    }
 
-	protected override void Move() {
+    protected override void Move()
+    {
 
         bool repeat = true;
         int iteration = 0;
@@ -54,11 +68,11 @@ class Player : CircleObjectBase {
 
             oldPosition = position;
             position += velocity;
-            CollisionInfo colInfo = engine.MoveUntilCollision(myCollider, velocity*remainingMovement);
+            CollisionInfo colInfo = engine.MoveUntilCollision(myCollider, velocity * remainingMovement);
             if (colInfo != null)
             {
                 repeat = true;
-                remainingMovement = 1 - colInfo.timeOfImpact; 
+                remainingMovement = 1 - colInfo.timeOfImpact;
                 ResolveCollisions(colInfo);
             }
             iteration++;
@@ -88,8 +102,8 @@ class Player : CircleObjectBase {
 
         foreach (Collider pCol in overlaps)
         {
-            
-            if (pCol.owner is Teleporter&&!hadPortalCollisionThisFrame)
+
+            if (pCol.owner is Teleporter)
             {
                 //Console.WriteLine(1);
                 MyGame myGame = (MyGame)Game.main;
@@ -120,14 +134,14 @@ class Player : CircleObjectBase {
 
     }
 
-    void ResolveCollisions(CollisionInfo pCol) {
+    void ResolveCollisions(CollisionInfo pCol)
+    {
 
         if (pCol.normal.y < -0.9f) grounded = true;
 
 
         if (pCol.other.owner is Teleporter)
         {
-            hadPortalCollisionThisFrame= true;
             MyGame myGame = (MyGame)Game.main;
             Teleporter teleporter = (Teleporter)pCol.other.owner;
             if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
@@ -138,10 +152,12 @@ class Player : CircleObjectBase {
                 //Console.WriteLine(velocity.Length());
 
                 velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
+                state = FLYING;
 
                 new Sound("PortalEnterSFXNew.wav").Play();
             }
-            else {
+            else
+            {
                 velocity.Reflect(bounciness, pCol.normal);
             }
 
@@ -153,31 +169,35 @@ class Player : CircleObjectBase {
         {
 
             Line segment = (Line)pCol.other.owner;
-            if (segment.isRotating) {
-                
+            if (segment.isRotating)
+            {
+
                 Vec2 tempVelocity = pCol.normal * speedEachFrame;
-                
+
                 velocity -= tempVelocity;
                 velocity.Reflect(bounciness, pCol.normal);
                 velocity += tempVelocity;
 
                 return;
             }
-            else {
+            else
+            {
                 Line segment1 = (Line)pCol.other.owner;
                 //Console.WriteLine(segment1.start.GetAngleDegreesTwoPoints(segment1.end));
                 float angle = Mathf.Abs(segment1.start.GetAngleDegreesTwoPoints(segment1.end)) % 180;
 
                 if (Input.GetKey(Key.LEFT_SHIFT))
                 {
-                    Console.WriteLine("angle: {0}",angle);
+                    Console.WriteLine("angle: {0}", angle);
                 }
 
-                if (angle >= 5&&angle<90){
+                if (angle >= 5 && angle < 90)
+                {
                     //Console.WriteLine(segment1.start.GetAngleDegreesTwoPoints(segment1.end));
                     state = ROLLING;
                 }
-                else{
+                else
+                {
                     state = MOVE;
                 }
 
@@ -187,7 +207,8 @@ class Player : CircleObjectBase {
 
         }
 
-        if (pCol.other.owner is BouncyFloor) {
+        if (pCol.other.owner is BouncyFloor)
+        {
             velocity.Reflect(1.1f, pCol.normal);
             state = JUMP;
             return;
@@ -212,13 +233,14 @@ class Player : CircleObjectBase {
     }
 
 
-    void Shoot() {
+    void Shoot()
+    {
 
         if (Input.GetMouseButton(0) && (Time.time - lastShotTime >= cooldown))
         {
             var result = ((MyGame)game).cameraManager.camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
             Vec2 shotDirection = (new Vec2(result.x, result.y) - position).Normalized();
-            Projectile bullet = new Projectile(position, shotDirection, Projectile._radius,0);
+            Projectile bullet = new Projectile(position, shotDirection, Projectile._radius, 0);
             parent.AddChild(bullet);
             lastShotTime = Time.time;
             int randomIndex = rnd.Next(0, 3);
@@ -260,12 +282,12 @@ class Player : CircleObjectBase {
         }
     }
 
-	protected override void Update() {
-        SetColor(state % 2, (state / 2)%2, (state + 1) % 2);
+    protected override void Update()
+    {
+        SetColor(state % 2, (state / 2) % 2, (state + 1) % 2);
         alpha = grounded ? 1 : 0.4f;
-        Console.WriteLine(velocity.Length()+" "+state);
 
-        hadPortalCollisionThisFrame= false;
+
         HandleInput();
 
         grounded = false;
@@ -273,27 +295,33 @@ class Player : CircleObjectBase {
         Move();
         Shoot();
 
-        //Console.WriteLine(velocity.Length());
+        State();
     }
 
     void HandleInput()
     {
 
         Vec2 moveDirection = new Vec2(0, 0);
-        if (state != ROLLING||state==ROLLING) {
+        if (state != ROLLING || state == ROLLING)
+        {
 
             if (Input.GetKey(Key.LEFT) || Input.GetKey(Key.A))
             {
                 moveDirection -= new Vec2(1, 0);
+                lastInputTime = Time.time;
+                lastInput = 1;
             }
             if (Input.GetKey(Key.RIGHT) || Input.GetKey(Key.D))
             {
                 moveDirection += new Vec2(1, 0);
+                lastInputTime = Time.time;
+                lastInput = 0;
             }
 
             if (Input.GetKey(Key.UP) && (state == MOVE) && grounded || Input.GetKey(Key.W) && (state == MOVE) && grounded)
             {
                 state = JUMP;
+                lastInputTime = Time.time;
                 velocity -= new Vec2(0, 20);
                 new Sound("Character_Jump.wav").Play();
             }
@@ -301,9 +329,10 @@ class Player : CircleObjectBase {
         }
 
 
-        velocity.x += moveDirection.x * speedEachFrame; 
+        velocity.x += moveDirection.x * speedEachFrame;
 
-        switch (state){
+        switch (state)
+        {
             case MOVE:
                 CapSpeed();
 
@@ -316,7 +345,7 @@ class Player : CircleObjectBase {
                 if (velocity.y < 0)
                 {
                     state = JUMP;
-                    capSpeed =false;
+                    capSpeed = false;
                 }
 
                 if (moveDirection.x == 0 && velocity.y == 0)
@@ -326,7 +355,8 @@ class Player : CircleObjectBase {
                 break;
             case JUMP:
                 CapSpeed();
-                if (velocity.y > 0){
+                if (velocity.y > 0)
+                {
                     state = FALL;
                     capSpeed = true;
                 }
@@ -346,13 +376,14 @@ class Player : CircleObjectBase {
             case FLYING:
 
                 break;
-        
+
         }
 
 
         velocity += acceleration * accelerationMultiplier;
 
-        if (velocity.Length() > maxSpeed) {
+        if (velocity.Length() > maxSpeed)
+        {
             velocity = velocity.Normalized() * maxSpeed;
         }
 
@@ -362,11 +393,38 @@ class Player : CircleObjectBase {
 
     }
 
-    void CapSpeed() {
+    void CapSpeed()
+    {
         if (velocity.x > maxSpeedHorizontal)
             velocity.x = maxSpeedHorizontal;
         if (velocity.x < -maxSpeedHorizontal)
             velocity.x = -maxSpeedHorizontal;
+    }
+
+    void State()
+    {
+        switch (lastInput) {
+            case 0:
+                sprite.Mirror(false,false);
+                break;
+            case 1:
+                sprite.Mirror(true,false);
+                break;
+        
+        }
+
+        if (Time.time - lastInputTime > idleDelay && velocity.x == 0 && Mathf.Abs(velocity.y) <= 1)
+        {
+            sprite.SetCycle(36, 60);
+            sprite.Animate(1);
+        }
+        else {
+            sprite.SetCycle(97, 61);
+            sprite.Animate(1);
+
+        }
+
+
     }
 
 }
