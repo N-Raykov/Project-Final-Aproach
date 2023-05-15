@@ -19,6 +19,16 @@ class Level : GameObject
         loader = new TiledLoader(filename);
         //loader.rootObject = myGame ;
         CreateLevel();
+
+        if (filename == "Title_Screen.tmx")
+        {
+            new Sound("Title_Theme.wav", true, true).Play();
+        }
+        else
+        {
+            new Sound("Background_Music_Level.wav", true, true).Play();
+        }
+
     }
 
     void CreateLevel(bool includeImageLayers = true)

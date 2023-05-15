@@ -8,9 +8,10 @@ using GXPEngine;
 using Physics;
 
 class Player : CircleObjectBase {
-    
-    
-	float speedEachFrame = 2.5f;//6f
+
+    Random rnd = new Random();
+
+    float speedEachFrame = 2.5f;//6f
     float maxSpeedHorizontal = 7f;
 	int cooldown=400;
 	int lastShotTime = -10000;
@@ -137,6 +138,7 @@ class Player : CircleObjectBase {
 
                 velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
 
+                new Sound("PortalEnterSFXNew.wav").Play();
             }
             else {
                 velocity.Reflect(bounciness, pCol.normal);
@@ -178,6 +180,7 @@ class Player : CircleObjectBase {
                     state = MOVE;
                 }
 
+                new Sound("Collectible_Pickup.wav").Play();
                 velocity.Reflect(bounciness, pCol.normal);
                 return;
             }
@@ -218,7 +221,19 @@ class Player : CircleObjectBase {
             Projectile bullet = new Projectile(position, shotDirection, Projectile._radius,0);
             parent.AddChild(bullet);
             lastShotTime = Time.time;
-            new Sound("pickUp.mp3").Play();
+            int randomIndex = rnd.Next(0, 3);
+            switch (randomIndex)
+            {
+                case 0:
+                    new Sound("Portal_Gun_Shot1.wav").Play();
+                    break;
+                case 1:
+                    new Sound("Portal_Gun_Shot2.wav").Play();
+                    break;
+                case 2:
+                    new Sound("Portal_Gun_Shot3.wav").Play();
+                    break;
+            }
         }
 
         if (Input.GetMouseButton(1) && (Time.time - lastShotTime >= cooldown))
@@ -228,6 +243,20 @@ class Player : CircleObjectBase {
             Projectile bullet = new Projectile(position, shotDirection, Projectile._radius, 1);
             parent.AddChild(bullet);
             lastShotTime = Time.time;
+
+            int randomIndex = rnd.Next(0, 3);
+            switch (randomIndex)
+            {
+                case 0:
+                    new Sound("Portal_Gun_Shot1.wav").Play();
+                    break;
+                case 1:
+                    new Sound("Portal_Gun_Shot2.wav").Play();
+                    break;
+                case 2:
+                    new Sound("Portal_Gun_Shot3.wav").Play();
+                    break;
+            }
         }
     }
 
@@ -253,20 +282,20 @@ class Player : CircleObjectBase {
         Vec2 moveDirection = new Vec2(0, 0);
         if (state != ROLLING||state==ROLLING) {
 
-            if (Input.GetKey(Key.LEFT))
+            if (Input.GetKey(Key.LEFT) || Input.GetKey(Key.A))
             {
                 moveDirection -= new Vec2(1, 0);
             }
-            if (Input.GetKey(Key.RIGHT))
+            if (Input.GetKey(Key.RIGHT) || Input.GetKey(Key.D))
             {
                 moveDirection += new Vec2(1, 0);
             }
 
-            if (Input.GetKey(Key.UP) && (state == MOVE)&&grounded)
+            if (Input.GetKey(Key.UP) && (state == MOVE) && grounded || Input.GetKey(Key.W) && (state == MOVE) && grounded)
             {
                 state = JUMP;
                 velocity -= new Vec2(0, 20);
-
+                new Sound("Character_Jump.wav").Play();
             }
 
         }

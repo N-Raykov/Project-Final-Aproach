@@ -19,6 +19,8 @@ public class Teleporter:Line{
         portalNumber= pPortalNumber;
         normal=pNormal;
 
+        new Sound("Portal_Spawn.wav").Play();
+
         foreach (Collider col in colliders)
             col.owner = this;
 
