@@ -16,7 +16,6 @@ class Player : CircleObjectBase
     float maxSpeedHorizontal = 7f;
     int cooldown = 400;
     int lastShotTime = -10000;
-    int hp = 100;
     public static readonly string tag = "player";
     int state = MOVE;
     const int MOVE = 1;
@@ -28,14 +27,17 @@ class Player : CircleObjectBase
 
     Vec2 lastCheckPoint = new Vec2(0, 0);
 
-    bool grounded = false;
-    AnimationSprite sprite = new AnimationSprite("Robot_Frames.png", 32,5,158);
+    bool grounded = false;//11,12,122
+    AnimationSprite sprite = new AnimationSprite("Robot_Frames.png", 32, 5, 158);
 
 
     int lastInputTime = -10000;
-    int idleDelay = 1000;
+    int idleDelay = 200;
     int lastInput = 0;
 
+
+    public static int collectablesCollected=0;
+    public static readonly int collectableNumber=5;
 
     public Player(Vec2 startPosition, int pRadius) : base(pRadius, startPosition)
     {
@@ -44,6 +46,7 @@ class Player : CircleObjectBase
         Draw(255, 255, 255);
         
         sprite.SetOrigin(sprite.width / 2, sprite.height/2+sprite.height/6);
+        //sprite.SetScaleXY(0.1f, 0.1f); 
         sprite.SetScaleXY(0.8f, 0.6f);
         AddChild(sprite);
     }
@@ -51,11 +54,11 @@ class Player : CircleObjectBase
 
     protected override void AddCollider()
     {
-        engine.AddSolidCollider(myCollider);//was trigger
+        engine.AddTriggerCollider(myCollider);//was solid
     }
     protected override void OnDestroy()
     {
-        engine.RemoveSolidCollider(myCollider);
+        engine.RemoveTriggerCollider(myCollider);
     }
 
     protected override void Move()
@@ -96,8 +99,10 @@ class Player : CircleObjectBase
 
             if (pTrig.owner.parent is Collectable)
             {
+                Console.WriteLine(1);
                 Collectable collectable = (Collectable)pTrig.owner.parent;
                 collectable.PickUp();
+                collectablesCollected++;
                 new Sound("Collectible_Pickup.wav").Play();
             }
 
@@ -105,7 +110,7 @@ class Player : CircleObjectBase
             {
                 Checkpoint checkpoint = (Checkpoint)pTrig.owner.parent;
                 lastCheckPoint.SetXY(checkpoint.x, checkpoint.y);
-                Console.WriteLine("rhanks?");
+                
             }
         }
 
@@ -114,7 +119,6 @@ class Player : CircleObjectBase
 
             if (pCol.owner is Teleporter)
             {
-                //Console.WriteLine(1);
                 MyGame myGame = (MyGame)Game.main;
                 Teleporter teleporter = (Teleporter)pCol.owner;
                 if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null && (Time.time - lastTeleport >= teleporterCooldown))
@@ -122,12 +126,9 @@ class Player : CircleObjectBase
 
                     myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].rotationOrigin + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
                     lastTeleport = Time.time;
-                    //Console.WriteLine(velocity.Length());
 
                     velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
                     state = FLYING;
-                    //accelerationMultiplier = 0.75f;
-                    //Console.WriteLine(velocity.Length());
                 }
 
 
@@ -192,7 +193,6 @@ class Player : CircleObjectBase
             else
             {
                 Line segment1 = (Line)pCol.other.owner;
-                //Console.WriteLine(segment1.start.GetAngleDegreesTwoPoints(segment1.end));
                 float angle = Mathf.Abs(segment1.start.GetAngleDegreesTwoPoints(segment1.end)) % 180;
 
                 if (Input.GetKey(Key.LEFT_SHIFT))
@@ -202,7 +202,6 @@ class Player : CircleObjectBase
 
                 if (angle >= 5 && angle < 90)
                 {
-                    //Console.WriteLine(segment1.start.GetAngleDegreesTwoPoints(segment1.end));
                     state = ROLLING;
                 }
                 else
@@ -309,7 +308,6 @@ class Player : CircleObjectBase
         Shoot();
 
         State();
-        //Console.WriteLine(y);
     }
 
     void HandleInput()
@@ -408,10 +406,6 @@ class Player : CircleObjectBase
             velocity = velocity.Normalized() * maxSpeed;
         }
 
-
-
-
-
     }
 
     void CapSpeed()
@@ -437,13 +431,15 @@ class Player : CircleObjectBase
         if (Time.time - lastInputTime > idleDelay && velocity.x == 0 && Mathf.Abs(velocity.y) <= 1)
         {
             sprite.SetCycle(36, 60);
-            sprite.Animate(1);
+            sprite.Animate(0.5f);
         }
-        else {
+        else
+        {
             sprite.SetCycle(97, 61);
-            sprite.Animate(1);
+            sprite.Animate(0.5f);
 
         }
+
 
 
     }

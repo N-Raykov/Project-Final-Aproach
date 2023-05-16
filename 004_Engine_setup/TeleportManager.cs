@@ -14,7 +14,7 @@ public class TeleportManager:GameObject{
 
     public Teleporter[] portals = { null, null };
 
-    public int shots = 2;
+    public int shots = 10;
 
     public TeleportManager() { 
     }

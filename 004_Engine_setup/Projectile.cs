@@ -104,8 +104,10 @@ class Projectile : CircleObjectBase {
                         myGame.teleportManager.portals[portalNumber].sprite.rotation = rotation;
 
                         myGame.teleportManager.portalsChanged[portalNumber] = true;
+                        
 
-                        myGame.teleportManager.shots = 100;
+                        myGame.teleportManager.shots = 2;//might need to be higher
+
 
                         parent.AddChild(myGame.teleportManager.portals[portalNumber]);
                         this.LateDestroy();

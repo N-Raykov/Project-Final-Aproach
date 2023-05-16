@@ -111,6 +111,7 @@
     <Compile Include="Teleporter.cs" />
     <Compile Include="TeleportManager.cs" />
     <Compile Include="Tween.cs" />
+    <Compile Include="UI.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
