@@ -19,13 +19,14 @@ public class LaserShooter:AnimationSprite{
     const int RIGHT = 2;
     int side;
     Vec2 position;
-    public Sprite laser1 = new Sprite("laser.png",false);
-    public Sprite laser2 = new Sprite("laser.png", false);
+    public Sprite laser1 = new Sprite("buttom_and_laser_blue.png", false);
+    public Sprite laser2 = new Sprite("buttom_and_laser_blue.png", false);
     public bool laser1WasDrawn = false;
     public bool laser2WasDrawn = false;
     float lineWidthHalf = 3;
     bool addedToGame = false;
     bool setPosition = false;
+
 
     int portalNumber = -1;
 
@@ -85,6 +86,8 @@ public class LaserShooter:AnimationSprite{
 
     public void DrawLaser2(Vec2 start,Vec2 end) {
         
+        Console.WriteLine("drawn");
+        
         laser2WasDrawn = true;
         Vec2 vec = end - start;
         float length = vec.Length();
@@ -111,36 +114,23 @@ public class LaserShooter:AnimationSprite{
 
     }
 
-    public void DestroyLaser2() {
-        if (portalNumber == -1)
-            return;
-       
-        //if (portalNumber == -1) {
+    public void DestroyLaser2(bool delete) {
 
-        //    Console.WriteLine(1);
-
-        //    if (laser2Col1 != null)
-        //        laser2Col1.Destroy();
-        //    if (laser2Col2 != null)
-        //        laser2Col2.Destroy();
-        //    laser2WasDrawn = false;
-        //    laser2.alpha = 0;
-        //    laser2.SetScaleXY(1, 1);
-        //    return;
-        //}
-
-        if (myGame.teleportManager.portalsChanged[Mathf.Abs(portalNumber - 1)]) {
-
-            Console.WriteLine(2);
+        if (delete || myGame.teleportManager.shots>0) {
             if (laser2Col1 != null)
                 laser2Col1.Destroy();
             if (laser2Col2 != null)
                 laser2Col2.Destroy();
-            laser2WasDrawn = false;
-            myGame.teleportManager.portalsChanged[Mathf.Abs(portalNumber - 1)] = false;
+
             laser2.alpha = 0;
             laser2.SetScaleXY(1, 1);
+
+            myGame.teleportManager.portalsChanged[0] = false;
+            myGame.teleportManager.portalsChanged[1] = false;
+            laser2WasDrawn = false;
+
         }
+
 
     }
 
@@ -150,7 +140,7 @@ public class LaserShooter:AnimationSprite{
         AddLasers();
         if (myGame.teleportManager.shots>0)
             Shoot(side);
-        DestroyLaser2();
+        DestroyLaser2(false);
     }
 
     void Shoot(int pSide) { 
@@ -190,8 +180,13 @@ public class LaserShooter:AnimationSprite{
 
     void Reset() {
 
+        //if (Input.GetMouseButton(0) || Input.GetMouseButton(1)) {
+        //    Console.WriteLine("mouse pressed");
+        //    DestroyLaser2(true);
+        //}
+
         if (Input.GetKeyUp(Key.R)){
-            DestroyLaser2();    
+            DestroyLaser2(true);    
             laser2StartPos = new Vec2();
             previousLaser2StartPos = new Vec2();
             laser2WasDrawn= false;

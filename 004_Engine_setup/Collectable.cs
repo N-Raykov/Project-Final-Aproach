@@ -23,7 +23,8 @@ class Collectable : AnimationSprite
 
         Vec2 position = new Vec2(obj.X + obj.Width / 2, obj.Y + obj.Height / 2);
 
-        collectable = new CircleObjectBase(width / 16, position, default, true, true);
+        collectable = new CircleObjectBase(width / 16, position, default,false, true);
+        
     }
 
 
@@ -35,6 +36,8 @@ class Collectable : AnimationSprite
 
     void Update()
     {
+
+        
         if (created == false)
         {
             AddChild(collectable);
