@@ -12,7 +12,7 @@ class Collectable : AnimationSprite
     CircleObjectBase collectable;
     bool created = false;
 
-    public Collectable(TiledObject obj = null) : base("battery_1.png", 1, 1, -1, false, false)
+    public Collectable(TiledObject obj = null) : base("Battery_new.png", 1, 1, -1, false, false)
     {
         Initialize(obj);
     }
