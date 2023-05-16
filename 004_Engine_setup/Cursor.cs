@@ -10,6 +10,7 @@ public class Cursor:AnimationSprite{
     public Cursor() : base("spritesheet.png",4,1,4) {
         SetOrigin(width / 2, height / 2);
         SetScaleXY(0.3f,0.3f);
+        rotation = 180;
     }
 
 
@@ -33,12 +34,12 @@ public class Cursor:AnimationSprite{
         }
         if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] == null)
         {
-            SetFrame(1);
+            SetFrame(2);
             return;
         }
         if (myGame.teleportManager.portals[0] == null && myGame.teleportManager.portals[1] != null)
         {
-            SetFrame(2);
+            SetFrame(1);
             return;
         }
         if (myGame.teleportManager.portals[0] != null && myGame.teleportManager.portals[1] != null)

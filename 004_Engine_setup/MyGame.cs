@@ -10,7 +10,7 @@ public class MyGame : Game
 
     public TeleportManager teleportManager;
     public CameraManager cameraManager;
-
+    public UI ui;
 
 	public MyGame() : base(1200, 800, false,false)
 	{
@@ -18,9 +18,11 @@ public class MyGame : Game
         ShowMouse(false);
         teleportManager = new TeleportManager();
         AddChild(teleportManager);
-        
 
-        cameraManager= new CameraManager();
+        cameraManager = new CameraManager();
+
+        ui = new UI();
+        cameraManager.camera.AddChild(ui);
 
         LoadLevel(startLevel);
         

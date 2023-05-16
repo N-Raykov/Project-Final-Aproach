@@ -53,8 +53,6 @@ class Level : GameObject
                     button.SetDoor(door);
             }
         }
-        UI ui= new UI();
-        myGame.cameraManager.camera.AddChild(ui);
 
        
         //AddChild(ui);

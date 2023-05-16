@@ -35,10 +35,6 @@ class Player : CircleObjectBase
     int idleDelay = 200;
     int lastInput = 0;
 
-
-    public static int collectablesCollected=0;
-    public static readonly int collectableNumber=5;
-
     public Player(Vec2 startPosition, int pRadius) : base(pRadius, startPosition)
     {
         bounciness = 0f;
@@ -102,7 +98,6 @@ class Player : CircleObjectBase
                 Console.WriteLine(1);
                 Collectable collectable = (Collectable)pTrig.owner.parent;
                 collectable.PickUp();
-                collectablesCollected++;
                 new Sound("Collectible_Pickup.wav").Play();
             }
 

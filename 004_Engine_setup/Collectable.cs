@@ -21,6 +21,8 @@ class Collectable : AnimationSprite
     {
         //alpha = 0.0f;
 
+        ((MyGame)game).ui.totalCollectables++;
+
         Vec2 position = new Vec2(obj.X + obj.Width / 2, obj.Y + obj.Height / 2);
 
         collectable = new CircleObjectBase(width / 16, position, default,false, true);
@@ -31,6 +33,7 @@ class Collectable : AnimationSprite
     public void PickUp()
     {
         Console.WriteLine("pickup collected");
+        ((MyGame)game).ui.collectablesCollected++;
         Destroy();
     }
 
