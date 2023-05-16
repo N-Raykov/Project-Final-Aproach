@@ -4,16 +4,18 @@ using GXPEngine;
 
 public class MyGame : Game
 {
-    string startLevel = "Game_Puzzle_TileSet_neeew.tmx";
+    public string startLevel = "Main_Menu.tmx";
     string nextLevel;
+    public bool changedLevel = false;
 
     public TeleportManager teleportManager;
     public CameraManager cameraManager;
 
+
 	public MyGame() : base(1200, 800, false,false)
 	{
-        RenderMain = false;
-
+        RenderMain = true;
+        ShowMouse(false);
         teleportManager = new TeleportManager();
         AddChild(teleportManager);
         
@@ -37,6 +39,7 @@ public class MyGame : Game
 
     public void LoadLevel(string pNextLevel)
     {
+        changedLevel = true;
         nextLevel = pNextLevel;
     }
 
@@ -62,6 +65,11 @@ public class MyGame : Game
     void Update() {
         teleportManager.Update();
         cameraManager.Update();
+
+        if (startLevel == "Main_Menu.tmx")
+            RenderMain = true;
+        else
+            RenderMain = false;
         //Console.WriteLine(cameraManager.camera.x + " " + cameraManager.camera.y);
     }
 }

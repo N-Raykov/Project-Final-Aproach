@@ -14,7 +14,7 @@ public class TeleportManager:GameObject{
 
     public Teleporter[] portals = { null, null };
 
-    public int shots = 10;
+    public int shots = 50;//was 100
 
     public TeleportManager() { 
     }
@@ -24,7 +24,7 @@ public class TeleportManager:GameObject{
             shots--;
 
 
-        if (Input.GetKeyUp(Key.R)) {
+        if (Input.GetKeyUp(Key.R)|| Input.GetKeyUp(Key.F)) {
             
             if (portals[0] != null) {
                 portals[0].sprite.Destroy();

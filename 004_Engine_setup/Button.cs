@@ -67,6 +67,7 @@ public class Button:AnimationSprite{
         if (!enabled) {
             door.enabled = true;
             enabled = true;
+            new Sound("Gate_Open.wav").Play();
         }
             
     }

@@ -36,7 +36,7 @@ public class CameraManager
                 camera.x = cameraLocations[target].x;
                 camera.y = cameraLocations[target].y;
                 camera.scale = cameraScales[target];
-                trigger.owner.parent.Destroy();
+                //trigger.owner.parent.Destroy();
             }
             else
             {

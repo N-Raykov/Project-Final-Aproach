@@ -11,6 +11,8 @@ class Level : GameObject
     TiledLoader loader;
     string currentLevelName;
     MyGame myGame = (MyGame)Game.main;
+    SoundChannel backGroundMusic;
+    Cursor cursor = new Cursor();
 
     public Level(string filename)
     {
@@ -20,13 +22,13 @@ class Level : GameObject
         //loader.rootObject = myGame ;
         CreateLevel();
 
-        if (filename == "Title_Screen.tmx")
+        if (filename == "Main_Menu.tmx")
         {
-            new Sound("Title_Theme.wav", true, true).Play();
+            backGroundMusic = new Sound("Title_Theme.wav", true, true).Play();
         }
         else
         {
-            new Sound("Background_Music_Level.wav", true, true).Play();
+            backGroundMusic = new Sound("Background_Music_Level.wav", true, true).Play();
         }
 
     }
@@ -41,6 +43,8 @@ class Level : GameObject
         loader.autoInstance = true;
         loader.LoadObjectGroups();
 
+        AddChild(cursor);
+
         Button[] b = FindObjectsOfType<Button>();
         Door[] d = FindObjectsOfType<Door>();
         foreach (Button button in b) {
@@ -51,7 +55,24 @@ class Level : GameObject
         }
         UI ui= new UI();
         myGame.cameraManager.camera.AddChild(ui);
+
+       
         //AddChild(ui);
 
+    }
+
+    void Update() {
+        //Console.WriteLine(1);\
+        if (myGame.changedLevel) {
+            myGame.teleportManager.shots = 50;
+            myGame.changedLevel = false;
+        }
+    
+    }
+        
+    protected override void OnDestroy()
+    {
+        backGroundMusic.Stop();
+        base.OnDestroy();
     }
 }

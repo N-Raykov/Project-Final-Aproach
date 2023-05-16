@@ -313,7 +313,7 @@ class Player : CircleObjectBase
     void HandleInput()
     {
 
-        if (Input.GetKey(Key.F)||y>2000) {
+        if (Input.GetKey(Key.F)||y>2500) {
             velocity.SetXY(0,0);
             myCollider.position = lastCheckPoint;
             state = MOVE;
