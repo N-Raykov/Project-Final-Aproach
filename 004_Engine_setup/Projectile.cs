@@ -11,7 +11,7 @@ class Projectile : CircleObjectBase {
     GameObject owner;
 	public int bounces = 0;
 	public readonly int maxBounces = 1;
-	float speed=40f;
+	float speed=100f;
     public static int _radius=5;
     int portalNumber=-1;
     bool hasTeleported = false;

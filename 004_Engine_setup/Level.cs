@@ -16,6 +16,7 @@ class Level : GameObject
     public static Pivot ObjectLayers= new Pivot();
     public static Pivot Platfroms = new Pivot();
     public static Pivot Doors = new Pivot();
+    public static Pivot BackTiles = new Pivot();
     public static Pivot Background1 = new Pivot();
     float bg1Multiplier = 0.9f;
     public static Pivot Background2 = new Pivot();
@@ -60,10 +61,12 @@ class Level : GameObject
 
     void LoadLevel()
     {
+        myGame.cameraManager.Initialize();
 
         AddChild(Background3);
         AddChild(Background2);
         AddChild(Background1);
+        AddChild(BackTiles);
         AddChild(Doors);
         AddChild(Platfroms);
         AddChild(ObjectLayers);
@@ -77,10 +80,12 @@ class Level : GameObject
         loader.LoadObjectGroups(1);
         loader.rootObject = Background1;
         loader.LoadObjectGroups(2);
+        loader.rootObject = BackTiles;
+        loader.LoadTileLayers(0);
         loader.rootObject = Doors;
         loader.LoadObjectGroups(3);
         loader.rootObject = Platfroms;
-        loader.LoadTileLayers();
+        loader.LoadTileLayers(1);
         loader.rootObject = ObjectLayers;
         loader.LoadObjectGroups(4);
 

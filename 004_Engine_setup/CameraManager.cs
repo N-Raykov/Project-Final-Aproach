@@ -19,10 +19,16 @@ public class CameraManager
 
     public CameraManager()
     {
+
+        
+    }
+
+    public void Initialize()
+    {
         camera = new Camera(0, 0, 1200, 800);
         camera.x = 0;//600
         camera.y = 0;//800
-
+        camera.AddChild(((MyGame)Game.main).ui);
     }
 
     public void MoveCamera(Collider trigger, int target)

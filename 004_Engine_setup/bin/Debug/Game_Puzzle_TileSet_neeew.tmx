@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="130" height="55" tilewidth="64" tileheight="64" infinite="0" nextlayerid="51" nextobjectid="428">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="130" height="55" tilewidth="64" tileheight="64" infinite="0" nextlayerid="52" nextobjectid="450">
  <tileset firstgid="1" name="1" tilewidth="64" tileheight="64" tilecount="256" columns="16">
   <image source="Platforms_Tile_Set_11_05_23.png" width="1024" height="1024"/>
  </tileset>
@@ -55,21 +55,21 @@
   <image source="RespawnInstructions.png" width="775" height="180"/>
  </tileset>
  <tileset firstgid="2314" name="LaserInstructions1" tilewidth="775" tileheight="274" tilecount="1" columns="1">
-  <image source="LaserInstructions1.png" width="775" height="274"/>
+  <image source="LaserInstructions1.png" width="775" height="276"/>
  </tileset>
  <tileset firstgid="2315" name="LaserInstructions2" tilewidth="775" tileheight="173" tilecount="1" columns="1">
-  <image source="LaserInstructions2.png" width="775" height="173"/>
+  <image source="LaserInstructions2.png" width="775" height="165"/>
+ </tileset>
+ <tileset firstgid="2316" name="One_Sprite_002" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="One_Sprite_002.jpg" width="64" height="64"/>
  </tileset>
  <objectgroup id="47" name="Background 3">
-  <object id="355" gid="2308" x="1870.37" y="2002.42" width="2397.63" height="1414.79"/>
+  <object id="355" gid="2308" x="1858.37" y="2002.42" width="2409.63" height="1802.79"/>
  </objectgroup>
  <objectgroup id="46" name="Background 2">
   <object id="356" gid="2309" x="1870.37" y="2002.42" width="2397.63" height="1414.79"/>
  </objectgroup>
  <objectgroup id="45" name="Background 1">
-  <object id="361" gid="2311" x="1870.37" y="2002.42" width="2397.63" height="1414.79"/>
-  <object id="414" gid="2219" x="1856" y="2716" width="4144" height="720"/>
-  <object id="415" gid="2219" x="4280" y="2004" width="1232" height="1464"/>
   <object id="423" gid="2312" x="1236.82" y="1406.64" width="609.364" height="298.431"/>
  </objectgroup>
  <objectgroup id="48" name="Doors">
@@ -90,7 +90,6 @@
   </object>
   <object id="425" gid="2313" x="2368" y="832" width="376.556" height="80"/>
   <object id="426" gid="2314" x="3392" y="896" width="475.182" height="168"/>
-  <object id="427" gid="2315" x="3030.34" y="1795" width="407.659" height="91"/>
  </objectgroup>
  <layer id="27" name="Copy of Platforms" width="130" height="55">
   <properties>
@@ -156,30 +155,6 @@
 </data>
  </layer>
  <objectgroup id="29" name="Object Layer">
-  <object id="174" class="Wall" x="3008" y="1152">
-   <polyline points="0,0 0,768 0,768 0,832 0,832"/>
-  </object>
-  <object id="177" class="Wall" x="4480" y="1024">
-   <polyline points="-128,1088 -128,1024 -128,896 -64,896 -64,960 640,960 640,1088"/>
-  </object>
-  <object id="178" class="Wall" x="5312" y="2112">
-   <polygon points="0,-128 128,-256"/>
-  </object>
-  <object id="182" class="Wall" x="5888" y="1344">
-   <polygon points="0,0 0,-320 128,-320 192,-256 704,-256 704,-192 640,-192 640,-128 704,-128 704,-64 448,-64 448,640 640,640 640,768 256,768 -256,768 -576,768 -576,640 -448,512 -384,512 -256,640 256,640 256,-128 128,-128 128,0 64,64 0,64"/>
-  </object>
-  <object id="191" class="Wall" x="2368" y="1088">
-   <polyline points="0,-64 0,704 -384,704 -384,-448"/>
-  </object>
-  <object id="201" class="Wall" x="5504" y="1856">
-   <polygon points="0,0 128,128"/>
-  </object>
-  <object id="206" class="Wall" x="7168" y="1088">
-   <polyline points="0,0 0,448 128,448 128,128 256,128 256,0 0,0"/>
-  </object>
-  <object id="207" class="Wall" x="7552" y="1088">
-   <polygon points="0,128 256,128 256,1024 384,1024 384,0 0,0"/>
-  </object>
   <object id="210" class="SpawnPoint" x="2112" y="1472" width="64" height="64"/>
   <object id="211" class="CameraTrigger" x="2258" y="1528.67">
    <properties>
@@ -202,22 +177,10 @@
     <property name="side" type="int" value="2"/>
    </properties>
   </object>
-  <object id="224" class="Wall" x="2432" y="640">
-   <polyline points="-256,-64 -128,-64 0,-64 704,-64 704,0 832,0 1728,0"/>
-  </object>
-  <object id="225" class="Wall" x="2368" y="1024">
-   <polyline points="0,0 128,0 128,896"/>
-  </object>
-  <object id="226" class="Wall" x="3008" y="1152">
-   <polyline points="0,0 -128,0 -128,832 0,832"/>
-  </object>
   <object id="228" class="LaserShooter" gid="296" x="3008" y="1984" width="64" height="64">
    <properties>
     <property name="side" type="int" value="2"/>
    </properties>
-  </object>
-  <object id="229" class="Wall" x="4480" y="1408">
-   <polygon points="0,0 192,0 192,256 0,256"/>
   </object>
   <object id="231" class="Button" gid="556" x="6144" y="1408" width="64" height="64" rotation="270">
    <properties>
@@ -249,12 +212,6 @@
     <property name="side" type="int" value="2"/>
    </properties>
   </object>
-  <object id="238" class="Wall" x="4928" y="1088">
-   <polyline points="-192,0 -192,-64 192,-64 192,832 181,835"/>
-  </object>
-  <object id="239" class="Wall" x="4544" y="1088">
-   <polygon points="-128,64 -128,-64 0,-64 0,64"/>
-  </object>
   <object id="245" class="LaserShooter" gid="296" x="6528" y="1216" width="64" height="64">
    <properties>
     <property name="side" type="int" value="2"/>
@@ -266,37 +223,10 @@
    </properties>
    <polyline points="0,0 -198.667,293.333 -109.333,-113.333 5.33333,232 -112,126.667 121.333,120 -182.667,-25.3333 -94.6667,176"/>
   </object>
-  <object id="250" class="Wall" x="3456" y="1920">
-   <polygon points="0,0 320,0 320,128 0,128"/>
-  </object>
   <object id="275" class="LaserShooter" gid="2147483944" x="4928" y="1984" width="64" height="72">
    <properties>
     <property name="side" type="int" value="1"/>
    </properties>
-  </object>
-  <object id="276" class="Wall" x="6272" y="832">
-   <polyline points="0,0 128,0 128,-320 1216,-320 1344,-320 1600,-320 1600,0 1664,0"/>
-  </object>
-  <object id="279" class="Wall" x="4736" y="1024">
-   <polygon points="192,896 192,128 64,128 64,64 0,64 0,0 384,0 384,768 384,896"/>
-  </object>
-  <object id="280" class="Wall" x="5120" y="1984">
-   <polyline points="0,0 0,128 -768,128 -768,-64 -704,-64 -576,-64 -576,0 0,0"/>
-  </object>
-  <object id="281" class="Wall" x="4160" y="640">
-   <polyline points="0,0 0,1088 128,1088 128,832 64,832 64,768 128,768 128,0"/>
-  </object>
-  <object id="282" class="Wall" x="1984" y="640">
-   <polyline points="0,0 192,0 192,-64"/>
-  </object>
-  <object id="283" class="Wall" x="3776" y="1472">
-   <polyline points="-64,-64 -640,-64"/>
-  </object>
-  <object id="284" class="Wall" x="3136" y="1536">
-   <polyline points="0,-128 0,64"/>
-  </object>
-  <object id="286" class="Wall" x="4992" y="1920">
-   <polygon points="0,0 0,64 64,64 64,0"/>
   </object>
   <object id="329" class="CameraLocation" x="2176" y="1216" width="64" height="64">
    <properties>
@@ -309,9 +239,6 @@
     <property name="index" type="int" value="1"/>
     <property name="scale" type="float" value="1.6"/>
    </properties>
-  </object>
-  <object id="335" class="Wall" x="4288" y="640">
-   <polyline points="0,0 0,-64 384,-64 384,0 1984,0 1984,192"/>
   </object>
   <object id="337" class="CameraTrigger" x="3287.33" y="1449.39">
    <properties>
@@ -361,9 +288,6 @@
     <property name="scale" type="float" value="1.8"/>
    </properties>
   </object>
-  <object id="345" class="Wall" x="3520" y="1024">
-   <polyline points="0,0 0,128 320,128 320,0 0,0"/>
-  </object>
   <object id="349" class="Checkpoint" x="2368.67" y="898" width="126.667" height="126.667"/>
   <object id="350" class="Checkpoint" x="3328" y="1280" width="126.667" height="126.667"/>
   <object id="351" class="Checkpoint" x="4416" y="1792" width="126.667" height="126.667"/>
@@ -374,9 +298,40 @@
   <object id="418" class="Collectable" x="4328" y="1504" width="96" height="96"/>
   <object id="419" class="Collectable" x="6033.82" y="1233.82" width="96" height="96"/>
   <object id="420" class="Collectable" x="7048.97" y="1294.42" width="96" height="96"/>
-  <object id="421" class="Ending" x="7934.24" y="861.03" width="247.152" height="225.152"/>
-  <object id="422" class="Wall" x="3712" y="1472">
-   <polyline points="0,-64 128,-64 128,128 -64,128 -192,191.333 -320,192 -321.333,129.333 -576,128"/>
+  <object id="421" class="Ending" x="7934" y="865.878" width="247.152" height="225.152"/>
+  <object id="428" class="Wall" x="2368" y="1792">
+   <polyline points="5568,-960 5504,-960 5504,-1280 4032,-1280 4032,-960 3904,-960 3904,-1152 2304,-1152 2304,-1216 1920,-1216 1920,-384 1856,-384 1856,-320 1920,-320 1920,-64 1792,-64 1792,-1152 768,-1152 768,-1216 -192,-1216 -192,-1152 -384,-1152 -384,0 0,0 0,-768 128,-768 128,128"/>
   </object>
+  <object id="429" class="Wall" x="2880" y="1152">
+   <polygon points="0,0 128,0 128,832 0,832"/>
+  </object>
+  <object id="430" class="Wall" x="3520" y="1024">
+   <polygon points="0,0 320,0 320,128 0,128"/>
+  </object>
+  <object id="431" class="Wall" x="3136" y="1408">
+   <polygon points="0,0 704,0 704,192 512,192 384,256 256,256 256,192 0,192"/>
+  </object>
+  <object id="432" class="Wall" x="3456" y="1920">
+   <polygon points="0,0 320,0 320,128 0,128"/>
+  </object>
+  <object id="433" class="Wall" x="4352" y="1920">
+   <polygon points="0,0 192,0 192,64 640,64 640,0 576,0 576,-768 448,-768 448,-832 384,-832 384,-896 768,-896 768,0 704,0 704,64 768,64 768,192 0,192"/>
+  </object>
+  <object id="434" class="Wall" x="4480" y="1408">
+   <polygon points="0,0 192,0 192,256 0,256"/>
+  </object>
+  <object id="435" class="Wall" x="4416" y="1024">
+   <polygon points="0,0 128,0 128,128 0,128"/>
+  </object>
+  <object id="436" class="Wall" x="5312" y="1984">
+   <polygon points="0,0 0,128 1216,128 1216,0 1024,0 1024,-704 1280,-704 1280,-768 1216,-768 1216,-832 1280,-832 1280,-896 768,-896 704,-960 576,-960 576,-576 640,-576 704,-640 704,-768 832,-768 832,0 320,0 192,-128 128,-128"/>
+  </object>
+  <object id="437" class="Wall" x="7168" y="1536">
+   <polygon points="0,0 0,-448 256,-448 256,-320 128,-320 128,0"/>
+  </object>
+  <object id="439" class="Wall" x="7936" y="1088">
+   <polyline points="0,0 -384,0 -384,128 -128,128 -128,1024"/>
+  </object>
+  <object id="441" gid="2315" x="3268.9" y="1554.5" width="407.659" height="91"/>
  </objectgroup>
 </map>

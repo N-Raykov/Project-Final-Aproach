@@ -22,7 +22,8 @@ public class MyGame : Game
         cameraManager = new CameraManager();
 
         ui = new UI();
-        cameraManager.camera.AddChild(ui);
+
+        cameraManager.Initialize();
 
         LoadLevel(startLevel);
         

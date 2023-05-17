@@ -147,7 +147,7 @@ namespace GXPEngine
 				_parent = value;
 				if (value != null) {
 					if (destroyed) {
-						throw new Exception ("Destroyed game objects cannot be added to the game!");
+						//throw new Exception ("Destroyed game objects cannot be added to the game!");
 					}
 					_parent.addChild(this);
 				}
