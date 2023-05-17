@@ -16,7 +16,7 @@ class Projectile : CircleObjectBase {
     int portalNumber=-1;
     bool hasTeleported = false;
 
-
+    
     public static float _speed {
         get { return 10f; }//remember to also change speed
     }

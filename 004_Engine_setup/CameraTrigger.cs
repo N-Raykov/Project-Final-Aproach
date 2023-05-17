@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TiledMapParser;
+using System.Globalization;
 
 using GXPEngine.Core;
 using GXPEngine;
@@ -43,8 +44,12 @@ class CameraTrigger : AnimationSprite
         foreach (string str in nodeLocations)
         {
             string[] components = str.Split(',');
-            float x = float.Parse(components[0]);
-            float y = float.Parse(components[1]);
+
+            CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            ci.NumberFormat.CurrencyDecimalSeparator = ".";
+
+            float x = float.Parse(components[0], NumberStyles.Any, ci);
+            float y = float.Parse(components[0], NumberStyles.Any, ci);
             Vec2 vector = new Vec2(x + obj.X, y + obj.Y);
             vectorList.Add(vector);
         }
