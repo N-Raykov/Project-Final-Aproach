@@ -44,7 +44,7 @@ class Wall : AnimationSprite
             ci.NumberFormat.CurrencyDecimalSeparator = ".";
 
             float x = float.Parse(components[0], NumberStyles.Any, ci);
-            float y = float.Parse(components[0], NumberStyles.Any, ci);
+            float y = float.Parse(components[1], NumberStyles.Any, ci);
 
             Vec2 vector = new Vec2(x + obj.X, y + obj.Y);
             vectorList.Add(vector);
