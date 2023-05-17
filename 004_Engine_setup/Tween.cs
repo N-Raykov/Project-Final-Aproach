@@ -45,15 +45,15 @@ class Tween : GameObject{
             switch (targets[i]) {
                 case TweenProperty.x:
                     parent.x += outputDelta;
-                    Console.WriteLine("x");
+                    //Console.WriteLine("x");
                     break;
                 case TweenProperty.y:
                     parent.y += outputDelta;
-                    Console.WriteLine("y");
+                    //Console.WriteLine("y");
                     break;
                 case TweenProperty.rotation:
                     parent.rotation += outputDelta/5.0f;
-                    Console.WriteLine("rotation");
+                    //Console.WriteLine("rotation");
                     break;
                 case TweenProperty.scale:
                     if (parent is Camera) {

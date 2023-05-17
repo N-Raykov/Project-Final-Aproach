@@ -14,8 +14,8 @@ public class UI:GameObject {
     //EasyDraw collectableShit;
     Sprite batteryIcon;
 
-    public int totalCollectables = 0;
-    public int collectablesCollected = 0;
+    public static int totalCollectables = 0;
+    public static int collectablesCollected = 0;
 
     public UI() {
         

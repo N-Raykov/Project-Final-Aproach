@@ -86,7 +86,6 @@ public class LaserShooter:AnimationSprite{
 
     public void DrawLaser2(Vec2 start,Vec2 end) {
         
-        Console.WriteLine("drawn");
         
         laser2WasDrawn = true;
         Vec2 vec = end - start;
@@ -185,7 +184,8 @@ public class LaserShooter:AnimationSprite{
         //    DestroyLaser2(true);
         //}
 
-        if (Input.GetKeyUp(Key.R)){
+        if (Input.GetKeyUp(Key.R)|| Input.GetKeyUp(Key.F))
+        {
             DestroyLaser2(true);    
             laser2StartPos = new Vec2();
             previousLaser2StartPos = new Vec2();

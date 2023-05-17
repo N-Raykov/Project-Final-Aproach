@@ -132,7 +132,7 @@ class Projectile : CircleObjectBase {
                             }
 
                             if (ls.laser1WasDrawn && !ls.laser2WasDrawn&&hasTeleported) {
-                                Console.WriteLine(ls.previousLaser2StartPos+ " "+ls.laser2StartPos);
+                                //Console.WriteLine(ls.previousLaser2StartPos+ " "+ls.laser2StartPos);
                                 ls.DrawLaser2(ls.laser2StartPos, myCollider.position);
                             }
 

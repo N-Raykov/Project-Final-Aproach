@@ -15,6 +15,7 @@ public class CameraManager
     bool isMoving = false;
     int startTime = -1000;
     int duration = 2000;
+    public Vec2 distanceTravelled = new Vec2(0,0);
 
     public CameraManager()
     {
@@ -26,13 +27,11 @@ public class CameraManager
 
     public void MoveCamera(Collider trigger, int target)
     {
-        Console.WriteLine(1);
 
         if (!isMoving) {
 
             if (target == 0)
             {
-                Console.WriteLine(1);
                 camera.x = cameraLocations[target].x;
                 camera.y = cameraLocations[target].y;
                 camera.scale = cameraScales[target];
@@ -40,7 +39,8 @@ public class CameraManager
             }
             else
             {
-
+                distanceTravelled = cameraLocations[target] - new Vec2(camera.x, camera.y);
+                Console.WriteLine(distanceTravelled);
                 startTime = Time.time;
                 isMoving = true;
                 Tween tween1 = new Tween(TweenProperty.x, duration, cameraLocations[target].x - camera.x, 3);
@@ -63,6 +63,8 @@ public class CameraManager
         if (Time.time - startTime > duration) {
             isMoving = false;
         }
+
+        //Console.WriteLine(camera.x + " " + camera.y + " " + camera.scale); ;
 
         //camera.x = 2150;
         //camera.y = 1152;

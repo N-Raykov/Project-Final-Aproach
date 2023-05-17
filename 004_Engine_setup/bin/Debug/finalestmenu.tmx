@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="6">
- <tileset firstgid="1" name="dawdawdaw" tilewidth="64" tileheight="64" tilecount="1" columns="1">
-  <image source="checkers.png" width="64" height="64"/>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="4">
+ <tileset firstgid="1" name="UI_finish_title_without_bttns" tilewidth="1920" tileheight="1080" tilecount="1" columns="1">
+  <image source="UI_finish_title_without_bttns.jpg" width="1920" height="1080"/>
  </tileset>
- <tileset firstgid="2" name="dawda" tilewidth="1920" tileheight="1080" tilecount="1" columns="1">
-  <image source="UI_titles_001.jpg" width="1920" height="1080"/>
+ <tileset firstgid="2" name="UI_Menu_bttn" tilewidth="376" tileheight="151" tilecount="1" columns="1">
+  <image source="UI_Menu_bttn.png" width="376" height="151"/>
  </tileset>
- <tileset firstgid="3" name="wdawd" tilewidth="277" tileheight="278" tilecount="1" columns="1">
-  <image source="UI_titles_002.png" width="277" height="278"/>
- </tileset>
- <tileset firstgid="4" name="Good_Ending" tilewidth="1920" tileheight="1080" tilecount="9" columns="4">
-  <image source="Good_Ending.png" width="8640" height="540"/>
+ <tileset firstgid="3" name="UI_Retry_bttn" tilewidth="376" tileheight="151" tilecount="1" columns="1">
+  <image source="UI_Retry_bttn.png" width="381" height="153"/>
  </tileset>
  <layer id="1" name="Tile Layer 1" width="100" height="100">
   <data encoding="csv">
@@ -116,11 +113,16 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="2" name="Object Layer 1">
-  <object id="2" gid="2" x="0" y="800" width="1200" height="800"/>
+ <objectgroup id="3" name="Object Layer 2">
+  <object id="1" gid="1" x="0" y="800" width="1200" height="800"/>
  </objectgroup>
- <objectgroup id="3" name="asdas">
-  <object id="4" class="ButtonMenu" gid="3" x="513.242" y="607.106" width="167" height="172">
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="2" class="ButtonMenu" gid="2" x="320" y="464" width="211.656" height="85">
+   <properties>
+    <property name="levelName" value="Main_Menu.tmx"/>
+   </properties>
+  </object>
+  <object id="3" class="ButtonMenu" gid="3" x="672" y="464" width="211.66" height="85">
    <properties>
     <property name="levelName" value="Game_Puzzle_TileSet_neeew.tmx"/>
    </properties>

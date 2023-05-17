@@ -71,12 +71,12 @@ public class CircleMapObject:CircleObjectBase{
 
                     myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].rotationOrigin + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
                     lastTeleport = Time.time;
-                    Console.WriteLine(velocity.Length());
+
 
                     velocity = velocity.Length() * 1.0f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
 
                     //accelerationMultiplier = 0.75f;
-                    Console.WriteLine(velocity.Length());
+
                 }
 
 
@@ -121,12 +121,12 @@ public class CircleMapObject:CircleObjectBase{
 
                 myCollider.position = myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].rotationOrigin + radius * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
                 lastTeleport = Time.time;
-                Console.WriteLine(velocity.Length());
+
 
                 velocity = velocity.Length() * 1.1f * myGame.teleportManager.portals[Mathf.Abs(teleporter.portalNumber - 1)].normal;
 
                 //accelerationMultiplier = 0.75f;
-                Console.WriteLine(velocity.Length());
+
             }else{
                 velocity.Reflect(bounciness, pCol.normal);
             }

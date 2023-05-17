@@ -55,6 +55,8 @@
     <Compile Include="Collectable.cs" />
     <Compile Include="Cursor.cs" />
     <Compile Include="Door.cs" />
+    <Compile Include="Ending.cs" />
+    <Compile Include="EndScreen.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\AddOns\Camera.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine2023b\GXPEngine\AddOns\MouseHandler.cs" />

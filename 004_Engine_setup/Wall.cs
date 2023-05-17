@@ -30,7 +30,7 @@ class Wall : AnimationSprite
     {
         alpha = 0.0f;
 
-        Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, nodes);
+
 
         //Define the relative positions of the nodes and put them in a list
         List<string> nodeLocations = nodes.Split(' ').ToList();
@@ -58,7 +58,7 @@ class Wall : AnimationSprite
             lineList.Add(line);
         }
 
-        Console.WriteLine("{0} created!; Coordinates = {1}", obj.ID, lineList.Count);
+
 
 
     }

@@ -103,7 +103,7 @@ public class Line:EasyDraw
     }
 
     public void MoveColliders(Vec2 pVec) {
-        Console.WriteLine(1);
+
         start += pVec;
         end += pVec;
         foreach (Physics.Collider col in colliders)

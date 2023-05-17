@@ -14,7 +14,7 @@ public class MyGame : Game
 
 	public MyGame() : base(1200, 800, false,false)
 	{
-        RenderMain = true;
+        RenderMain = true;//was true
         ShowMouse(false);
         teleportManager = new TeleportManager();
         AddChild(teleportManager);
@@ -68,10 +68,10 @@ public class MyGame : Game
         teleportManager.Update();
         cameraManager.Update();
 
-        if (startLevel == "Main_Menu.tmx")
-            RenderMain = true;
-        else
-            RenderMain = false;
+        //if (startLevel == "Main_Menu.tmx")
+        //    RenderMain = true;
+        //else
+        //    RenderMain = true;
         //Console.WriteLine(cameraManager.camera.x + " " + cameraManager.camera.y);
     }
 }

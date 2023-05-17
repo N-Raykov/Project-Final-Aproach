@@ -52,7 +52,7 @@ public class CircleObjectBase : EasyDraw
         engine = ColliderManager.main;
         AddCollider();
         UpdateScreenPosition();
-        Draw(230, 200, 0);
+        //Draw(230, 200, 0);
     }
 
     protected virtual void AddCollider() {

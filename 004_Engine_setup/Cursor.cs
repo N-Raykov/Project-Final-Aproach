@@ -19,13 +19,12 @@ public class Cursor:AnimationSprite{
         {
             var result = myGame.cameraManager.camera.ScreenPointToGlobal(Input.mouseX, Input.mouseY);
             SetXY(result.x, result.y);
-            Console.WriteLine(result);
         }
         else {
             SetXY(Input.mouseX, Input.mouseY);
-
+            Console.WriteLine(Input.mouseX + " " + Input.mouseY + " " + x + " " + y);
         }
-
+        
 
 
         if (myGame.teleportManager.portals[0] == null && myGame.teleportManager.portals[1] == null) {

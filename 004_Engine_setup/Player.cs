@@ -11,6 +11,7 @@ class Player : CircleObjectBase
 {
 
     Random rnd = new Random();
+    MyGame myGame = (MyGame)Game.main;
 
     float speedEachFrame = 2.5f;//6f
     float maxSpeedHorizontal = 7f;
@@ -39,7 +40,7 @@ class Player : CircleObjectBase
     {
         bounciness = 0f;
         friction = 0.5f;
-        Draw(255, 255, 255);
+        //Draw(255, 255, 255);
         
         sprite.SetOrigin(sprite.width / 2, sprite.height/2+sprite.height/6);
         //sprite.SetScaleXY(0.1f, 0.1f); 
@@ -95,15 +96,28 @@ class Player : CircleObjectBase
 
             if (pTrig.owner.parent is Collectable)
             {
-                Console.WriteLine(1);
                 Collectable collectable = (Collectable)pTrig.owner.parent;
                 collectable.PickUp();
                 new Sound("Collectible_Pickup.wav").Play();
             }
 
+            if (pTrig.owner.parent is Ending)
+            {
+                Ending ending = (Ending)pTrig.owner.parent;
+                if(UI.collectablesCollected == UI.totalCollectables)
+                {
+                    myGame.LoadLevel("ending.tmx");
+                }
+                else
+                {
+                    myGame.LoadLevel("badEnding.tmx");
+                }
+            }
+
             if (pTrig.owner.parent is Checkpoint)
             {
                 Checkpoint checkpoint = (Checkpoint)pTrig.owner.parent;
+                checkpoint.frame = 1;
                 lastCheckPoint.SetXY(checkpoint.x, checkpoint.y);
                 
             }
@@ -308,14 +322,31 @@ class Player : CircleObjectBase
     void HandleInput()
     {
 
-        if (Input.GetKey(Key.F)||y>2500) {
-            velocity.SetXY(0,0);
+        if (Input.GetKey(Key.F) || y > 2500)
+        {
+            velocity.SetXY(0, 0);
             myCollider.position = lastCheckPoint;
             state = MOVE;
             UpdateScreenPosition();
+
+            if (myGame.teleportManager.portals[0] != null)
+            {
+                myGame.teleportManager.portals[0].sprite.Destroy();
+                myGame.teleportManager.portals[0].Destroy();
+                myGame.teleportManager.portals[0] = null;
+                myGame.teleportManager.portalsChanged[0] = false;
+            }
+            if (myGame.teleportManager.portals[1] != null)
+            {
+                myGame.teleportManager.portals[1].sprite.Destroy();
+                myGame.teleportManager.portals[1].Destroy();
+                myGame.teleportManager.portals[1] = null;
+                myGame.teleportManager.portalsChanged[1] = false;
+            }
+
         }
 
-            Vec2 moveDirection = new Vec2(0, 0);
+        Vec2 moveDirection = new Vec2(0, 0);
         if (state != ROLLING || state == ROLLING)
         {
 
@@ -426,12 +457,12 @@ class Player : CircleObjectBase
         if (Time.time - lastInputTime > idleDelay && velocity.x == 0 && Mathf.Abs(velocity.y) <= 1)
         {
             sprite.SetCycle(36, 60);
-            sprite.Animate(0.5f);
+            sprite.Animate(0.2f);
         }
         else
         {
             sprite.SetCycle(97, 61);
-            sprite.Animate(0.5f);
+            sprite.Animate(0.2f);
 
         }
 
